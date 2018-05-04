@@ -20,12 +20,14 @@ require 'src/TerrainTile'
 Timer = require 'lib/knife/timer'
 
 gTextures = {
-    ['ship'] = love.graphics.newImage('graphics/spaceship_1-40-24.png'),
+    ['ship'] = love.graphics.newImage('graphics/spaceships-2.png'),
     ['space'] = love.graphics.newImage('graphics/space-1.png'),
+    ['afterburners'] = love.graphics.newImage('graphics/afterburners-1.png'),
 }
 
 gFrames = {
-    ['ship'] = GenerateQuads(gTextures['ship'], 40, 24),
+    ['ship'] = GenerateQuads(gTextures['ship'], 21, 34),
+    ['afterburners'] = GenerateQuads(gTextures['afterburners'], 10, 7),
 }
 
 gFonts = {

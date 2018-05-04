@@ -10,8 +10,8 @@ function Ship:init(params)
     self.x = params.x
     self.y = params.y
     
-    self.width = 40
-    self.height = 24
+    self.width = 21
+    self.height = 34
 end
 
 function Ship:update(dt)
