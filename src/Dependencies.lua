@@ -14,6 +14,8 @@ require 'src/states/ScoreState'
 require 'src/states/TitleScreenState'
 
 require 'src/Ship'
+require 'src/Terrain'
+require 'src/TerrainTile'
 
 Timer = require 'lib/knife/timer'
 
