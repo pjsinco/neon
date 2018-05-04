@@ -14,6 +14,7 @@ require 'src/states/ScoreState'
 require 'src/states/TitleScreenState'
 
 require 'src/Ship'
+require 'src/AlienShip'
 require 'src/Terrain'
 require 'src/TerrainTile'
 
@@ -23,11 +24,13 @@ gTextures = {
     ['ship'] = love.graphics.newImage('graphics/spaceships-2.png'),
     ['space'] = love.graphics.newImage('graphics/space-1.png'),
     ['afterburners'] = love.graphics.newImage('graphics/afterburners-1.png'),
+    ['alien-ship-1'] = love.graphics.newImage('graphics/alien-ship-1.png'),
 }
 
 gFrames = {
     ['ship'] = GenerateQuads(gTextures['ship'], 21, 34),
     ['afterburners'] = GenerateQuads(gTextures['afterburners'], 10, 7),
+    ['alien-ship-1'] = GenerateQuads(gTextures['alien-ship-1'], 26, 22),
 }
 
 gFonts = {

@@ -1,8 +1,8 @@
-Ship = Class({})
+AlienShip = Class({})
 
-function Ship:init(params)
+function AlienShip:init(params)
     self.animation = Animation({
-        texture = gTextures['ship'],
+        texture = gTextures['alien-ship-1'],
         frames = {1},
         interval = 0.15,
     })
@@ -10,17 +10,17 @@ function Ship:init(params)
     self.x = params.x
     self.y = params.y
     
-    self.width = 21
-    self.height = 34
+    self.width = 26
+    self.height = 22
 end
 
-function Ship:update(dt)
+function AlienShip:update(dt)
     self.animation:update(dt)
 end
 
-function Ship:render()
+function AlienShip:render()
     love.graphics.draw(self.animation.texture,
-                       gFrames['ship'][self.animation:getCurrentFrame()],
+                       gFrames['alien-ship-1'][self.animation:getCurrentFrame()],
                        math.floor(self.x),
                        math.floor(self.y))
 end
