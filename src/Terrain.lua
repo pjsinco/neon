@@ -1,12 +1,11 @@
 Terrain = Class({})
 
 function Terrain:init(params)
-    self.width = 50 -- tiles wide
-    self.maxHeight = 11 -- tiles tall
+    self.width = math.floor(VIRTUAL_WIDTH / TILE_SIZE)
+    self.maxHeight = math.floor(VIRTUAL_HEIGHT / TILE_SIZE)
 
     self.gridX = 0 -- starting x position for terrain
-    self.gridYs = self:generateGridYs(self.width) -- table of y values
-
+    self.gridYs = self:generateGridYs(self.width + 1) -- table of y values
     
     self.leadingX = 0
 
@@ -16,7 +15,7 @@ end
 function Terrain:update(dt)
     self.leadingX = self.leadingX - self.dx * dt
 
-    assert(#self.gridYs < 52, 'Failed to remove unneeded terrain')
+    assert(#self.gridYs < self.width + 10, 'Failed to remove unneeded terrain')
 end
 
 function Terrain:render()
