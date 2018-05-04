@@ -4,32 +4,53 @@ function Terrain:init(params)
     self.width = 50 -- tiles wide
     self.maxHeight = 11 -- tiles tall
 
-    self.x = 0
+    self.x = 0 -- starting x position for terrain
+    self.gridYs = self:generateGridYs(self.width) -- table of y values
 
-    self.columns = {}
-
-    for i = 1, self.width do
-        local col = self:generateColumn(3, TERRAIN_TILE_WIDTH * i)
-        table.insert(self.columns, col)
-    end
+    self.leadingX = 0
 
     self.dx = TERRAIN_SCROLL_SPEED
 end
 
 function Terrain:update(dt)
-    for _, col in pairs(self.columns) do
-        for _, tile in pairs(col) do
-            tile.x = tile.x - (self.dx * dt)
-        end
-    end
+    self.leadingX = self.leadingX - self.dx * dt
 end
 
 function Terrain:render()
-    for _, col in pairs(self.columns) do
-        for _, tile in pairs(col) do
-            tile:render()
-        end
+
+    love.graphics.setColor({ 0, 255, 0, 255 })
+
+    for i = 1, #self.gridYs do
+        local x = (self.leadingX) + (TILE_SIZE * i)
+
+        love.graphics.rectangle('line',
+                                x,
+                                VIRTUAL_HEIGHT - (self.gridYs[i] * TILE_SIZE),
+                                TILE_SIZE,
+                                TILE_SIZE)
     end
+end
+
+--[[
+   Generate a list of numbers, with each no more than 1 greater or less than 
+   its neighbor.
+]]
+function Terrain:generateGridYs(count)
+    local currentY = 1
+    local ys = {}
+    for i = 1, count do
+        local nextY = math.random(2) - 1
+        local add = math.random(2) -- whether to add or subtract
+        if (add % 2 == 0) then
+          currentY = currentY + nextY
+        else
+          if currentY > 1 then -- make sure y is always above 0
+            currentY = currentY - nextY
+          end
+        end
+        table.insert(ys, currentY)
+    end
+    return ys
 end
 
 function Terrain:generateColumn(len, x)
