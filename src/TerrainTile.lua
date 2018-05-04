@@ -6,7 +6,6 @@ function TerrainTile:init(params)
     self.x = params.x
     self.y = params.y
     self.color = params.color
-print_r(self.color)
 end
 
 function TerrainTile:render()
