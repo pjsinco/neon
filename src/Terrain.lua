@@ -1,23 +1,34 @@
 Terrain = Class({})
 
 function Terrain:init(params)
-    self.terrainCol = self:generateColumn(3, VIRTUAL_WIDTH - 12)
-    --self.x = VIRTUAL_WIDTH - self.width 
-    --self.y = VIRTUAL_HEIGHT - self.height
-    --self.color = { 0, 255, 0, 255 }
-    
+    self.width = 50 -- tiles wide
+    self.maxHeight = 11 -- tiles tall
+
+    self.x = 0
+
+    self.columns = {}
+
+    for i = 1, self.width do
+        local col = self:generateColumn(3, TERRAIN_TILE_WIDTH * i)
+        table.insert(self.columns, col)
+    end
+
     self.dx = TERRAIN_SCROLL_SPEED
 end
 
 function Terrain:update(dt)
-    for _, tile in pairs(self.terrainCol) do
-        tile.x = tile.x - (self.dx * dt)
+    for _, col in pairs(self.columns) do
+        for _, tile in pairs(col) do
+            tile.x = tile.x - (self.dx * dt)
+        end
     end
 end
 
 function Terrain:render()
-    for _, tile in pairs(self.terrainCol) do
-        tile:render()
+    for _, col in pairs(self.columns) do
+        for _, tile in pairs(col) do
+            tile:render()
+        end
     end
 end
 
