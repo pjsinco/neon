@@ -27,6 +27,11 @@ ENTITY_DEFS = {
                 interval = 0.15,
                 texture = 'alien-ship-gray',
             },
+            ['move'] = {
+                frames = { 3, 2, 1, 2 },
+                interval = 0.15,
+                texture = 'alien-ship-gray',
+            },
         }
     },
     ['projectile-1'] = {

@@ -13,8 +13,4 @@ end
 
 function AlienShip:render()
     Entity.render(self)
-    --love.graphics.draw(self.animation.texture,
-                       --gFrames['alien-ship-1'][self.animation:getCurrentFrame()],
-                       --math.floor(self.x),
-                       --math.floor(self.y))
 end

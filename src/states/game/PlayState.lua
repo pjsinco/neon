@@ -21,8 +21,9 @@ function PlayState:init(params)
     })
     self.alien.stateMachine = StateMachine({
         ['static'] = function() return AlienStaticState(self.alien) end,
+        ['moving'] = function() return AlienMovingState(self.alien) end,
     })
-    self.alien:changeState('static')
+    self.alien:changeState('moving')
 
     self.terrain = Terrain()
 end
