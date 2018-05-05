@@ -36,6 +36,7 @@ gTextures = {
     ['alien-ship-1'] = love.graphics.newImage('graphics/alien-ship-1.png'),
     ['alien-ship-1'] = love.graphics.newImage('graphics/alien-ship-1.png'),
     ['projectile-1'] = love.graphics.newImage('graphics/projectiles.png'),
+    ['explosions'] = love.graphics.newImage('graphics/explosions.png'),
 }
 
 gFrames = {
@@ -43,6 +44,7 @@ gFrames = {
     ['afterburners'] = GenerateQuads(gTextures['afterburners'], 10, 7),
     ['alien-ship-1'] = GenerateQuads(gTextures['alien-ship-1'], 26, 22),
     ['projectile-1'] = GenerateQuads(gTextures['projectile-1'], 6, 3),
+    ['explosions'] = GenerateQuads(gTextures['explosions'], 16, 16),
 }
 
 gFonts = {
