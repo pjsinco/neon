@@ -8,10 +8,13 @@ require 'src/Util'
 require 'src/Animation'
 
 require 'src/states/BaseState'
-require 'src/states/CountdownState'
-require 'src/states/PlayState'
-require 'src/states/ScoreState'
-require 'src/states/TitleScreenState'
+require 'src/states/game/CountdownState'
+require 'src/states/game/PlayState'
+require 'src/states/game/ScoreState'
+require 'src/states/game/TitleScreenState'
+
+require 'src/states/entity/ShipIdleState'
+require 'src/states/entity/ShipMovingState'
 
 require 'src/Ship'
 require 'src/AlienShip'
@@ -25,6 +28,7 @@ gTextures = {
     ['space'] = love.graphics.newImage('graphics/space-1.png'),
     ['afterburners'] = love.graphics.newImage('graphics/afterburners-1.png'),
     ['alien-ship-1'] = love.graphics.newImage('graphics/alien-ship-1.png'),
+    ['alien-ship-1'] = love.graphics.newImage('graphics/alien-ship-1.png'),
 }
 
 gFrames = {
@@ -37,6 +41,11 @@ gFonts = {
     ['small'] = love.graphics.newFont('fonts/font.ttf', 8),
     ['medium'] = love.graphics.newFont('fonts/font.ttf', 16),
     ['large'] = love.graphics.newFont('fonts/font.ttf', 32),
+    ['image'] = love.graphics.newImageFont('fonts/imagefont-1.png',
+        " abcdefghijklmnopqrstuvwxyz" ..
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZ0" ..
+        "123456789.,!?-+/():;%&`'*#=[]\"")
+
 }
 
 gSounds = {
