@@ -48,3 +48,9 @@ function Entity:changeState(state, params)
     end
 end
 
+function Entity:collides(other)
+    return not (self.x > other.x + other.width or 
+                other.x > self.x + self.width or
+                self.y > other.y + other.height or 
+                other.y > self.y + self.height)
+end

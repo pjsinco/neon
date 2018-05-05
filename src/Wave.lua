@@ -1,6 +1,8 @@
 Wave = Class({})
 
-function Wave:init(params)
+function Wave:init(player)
+    self.player = player
+    self.terrain = Terrain()
     self.aliens = {}
 
     self.alienCount = 8
@@ -14,12 +16,18 @@ function Wave:init(params)
 end
 
 function Wave:update(dt)
+    self.terrain:update(dt)
+    self.player:update(dt)
+
     for _, alien in pairs(self.aliens) do
         alien:update(dt)
     end
 end
 
 function Wave:render()
+    self.terrain:render()
+    self.player:render()
+
     for _, alien in pairs(self.aliens) do
         alien:render()
     end
