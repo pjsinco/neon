@@ -24,6 +24,7 @@ require 'src/Ship'
 require 'src/AlienShip'
 require 'src/Terrain'
 require 'src/Projectile'
+require 'src/Wave'
 
 require 'src/entity_defs'
 
