@@ -16,6 +16,8 @@ function Ship:update(dt)
         table.insert(self.projectiles, Projectile({
             x = self.x + self.width,
             y = self.y + (self.height / 2),
+            width = ENTITY_DEFS['projectile-1'].width,
+            height = ENTITY_DEFS['projectile-1'].height,
             speed = ENTITY_DEFS['projectile-1'].speed,
             texture = ENTITY_DEFS['projectile-1'].texture,
             animations = ENTITY_DEFS['projectile-1'].animations,

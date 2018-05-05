@@ -14,3 +14,9 @@ end
 function AlienShip:render()
     Entity.render(self)
 end
+
+function AlienShip:onCollide()
+    Entity.onCollide(self)
+    self:changeAnimation('exploding')
+    self.dx, self.dy = 0, 0
+end

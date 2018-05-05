@@ -21,6 +21,18 @@ function Wave:update(dt)
 
     for _, alien in pairs(self.aliens) do
         alien:update(dt)
+
+        if self.player:collides(alien) then
+            alien:onCollide()
+            player:onCollide()
+        end
+    
+        for _, projectile in pairs(self.player.projectiles) do
+            if projectile:collides(alien) then
+                alien:onCollide()
+                projectile:onCollide()
+            end
+        end
     end
 end
 

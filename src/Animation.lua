@@ -4,7 +4,7 @@ function Animation:init(params)
     self.frames = params.frames
     self.texture = params.texture
     self.interval = params.interval
-    self.looping = params.looping or true
+    self.looping = params.looping
 
     self.timer = 0
     self.currentFrame = 1

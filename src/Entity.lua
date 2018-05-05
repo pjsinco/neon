@@ -7,12 +7,17 @@ function Entity:init(params)
     self.animations = self:createAnimations(params.animations)
     self.dx = params.speed
     self.dy = params.speed
+    self.active = true
 end
 
 function Entity:update(dt)
     if self.stateMachine ~= nil then
         self.stateMachine:update(dt)
     end
+end
+
+function Entity:onCollide()
+    
 end
 
 function Entity:createAnimations(animations)
@@ -22,7 +27,8 @@ function Entity:createAnimations(animations)
         toReturn[k] = Animation({
             texture = animDef.texture,
             frames = animDef.frames,
-            interval = animDef.interval
+            interval = animDef.interval,
+            looping = animDef.looping,
         })
     end
 
@@ -34,6 +40,10 @@ function Entity:changeAnimation(animation)
 end
 
 function Entity:render()
+    if not self.active then
+        return
+    end
+
     local texture = self.currentAnimation.texture
     local frame = gFrames[texture][self.currentAnimation:getCurrentFrame()]
     love.graphics.draw(gTextures[texture],
