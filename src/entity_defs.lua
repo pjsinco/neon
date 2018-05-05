@@ -20,9 +20,9 @@ ENTITY_DEFS = {
         }
     },
     ['alien-1'] = {
-        shipSpeed = SHIP_SPEED,
+        shipSpeed = SCROLL_SPEED,
         animations = {
-            ['move'] = {
+            ['static'] = {
                 frames = { 1 },
                 interval = 0.15,
                 texture = 'alien-ship-1',
