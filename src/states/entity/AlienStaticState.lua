@@ -10,6 +10,7 @@ end
 
 function AlienStaticState:update(dt)
     self.alien.x = self.alien.x - self.alien.dx * dt
+    self.alien.currentAnimation:update(dt)
 end
 
 function AlienStaticState:render()

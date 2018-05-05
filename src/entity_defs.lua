@@ -23,9 +23,9 @@ ENTITY_DEFS = {
         speed = SCROLL_SPEED,
         animations = {
             ['static'] = {
-                frames = { 1 },
+                frames = { 3, 2, 1, 2 },
                 interval = 0.15,
-                texture = 'alien-ship-1',
+                texture = 'alien-ship-gray',
             },
         }
     },
