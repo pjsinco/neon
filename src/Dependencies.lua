@@ -29,6 +29,8 @@ require 'src/Wave'
 require 'src/entity_defs'
 
 Timer = require 'lib/knife/timer'
+Event = require 'lib/knife/event'
+Chain = require 'lib/knife/chain'
 
 gTextures = {
     ['ship'] = love.graphics.newImage('graphics/spaceships-2.png'),

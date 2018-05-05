@@ -16,10 +16,6 @@ function Entity:update(dt)
     end
 end
 
-function Entity:onCollide()
-    
-end
-
 function Entity:createAnimations(animations)
     local toReturn = {}
 
@@ -35,8 +31,9 @@ function Entity:createAnimations(animations)
     return toReturn
 end
 
-function Entity:changeAnimation(animation)
+function Entity:changeAnimation(animation, callback)
     self.currentAnimation = self.animations[animation]
+    self.currentAnimation.after = callback or function() end
 end
 
 function Entity:render()

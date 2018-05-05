@@ -5,7 +5,6 @@ function Projectile:init(params)
     self:changeAnimation('glowing')
     self.width = params.width
     self.height = params.height
-print_r(self.animations)
 end
 
 function Projectile:update(dt)

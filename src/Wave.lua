@@ -23,14 +23,12 @@ function Wave:update(dt)
         alien:update(dt)
 
         if self.player:collides(alien) then
-            alien:onCollide()
-            player:onCollide()
+            Event.dispatch('collided', alien, player)
         end
     
         for _, projectile in pairs(self.player.projectiles) do
             if projectile:collides(alien) then
-                alien:onCollide()
-                projectile:onCollide()
+                Event.dispatch('collided', alien, projectile)
             end
         end
     end
