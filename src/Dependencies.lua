@@ -19,11 +19,11 @@ require 'src/states/entity/AlienMovingState'
 require 'src/states/entity/AlienStaticState'
 
 require 'src/Entity'
+require 'src/GameObject'
 require 'src/Ship'
 require 'src/AlienShip'
 require 'src/Terrain'
 require 'src/Projectile'
---require 'src/TerrainTile'
 
 require 'src/entity_defs'
 
