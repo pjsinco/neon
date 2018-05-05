@@ -1,7 +1,3 @@
---[[
-   Much of this class is borrowed from the Legend of Zelda class code
-]]
-
 Entity = Class({})
 
 function Entity:init(params)

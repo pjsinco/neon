@@ -5,16 +5,31 @@ function Ship:init(params)
 
     self.width = 21
     self.height = 34
+
+    self.projectiles = {}
 end
 
 function Ship:update(dt)
+    if love.keyboard.wasPressed('space') then
+        table.insert(self.projectiles, Projectile({
+            x = self.x + self.width,
+            y = self.y / 2,
+            speed = ENTITY_DEFS['projectile-1'].speed,
+            texture = ENTITY_DEFS['projectile-1'].texture,
+            animations = ENTITY_DEFS['projectile-1'].animations,
+        }))
+    end
+
+    for _, projectile in pairs(self.projectiles) do
+        projectile:update(dt)
+    end
+
     Entity.update(self, dt)
---    if love.keyboard.isDown('up') then
---        self.y = math.max(0, self.y - self.dy * dt)
---    elseif love.keyboard.isDown('down') then
---        self.y = math.min(VIRTUAL_HEIGHT - self.height, self.y + self.dy * dt)
 end
 
 function Ship:render()
+    for _, projectile in pairs(self.projectiles) do
+        projectile:render(dt)
+    end
     Entity.render(self)
 end

@@ -5,7 +5,7 @@ function PlayState:init(params)
         x = 16, 
         y = VIRTUAL_HEIGHT / 2,
         animations = ENTITY_DEFS['player'].animations,
-        speed = ENTITY_DEFS['player'].shipSpeed,
+        speed = ENTITY_DEFS['player'].speed,
     })
     self.ship.stateMachine = StateMachine({
         ['idle'] = function() return ShipIdleState(self.ship) end,
@@ -17,7 +17,7 @@ function PlayState:init(params)
         x = VIRTUAL_WIDTH - 16, 
         y = VIRTUAL_HEIGHT / 2,
         animations = ENTITY_DEFS['alien-1'].animations,
-        speed = ENTITY_DEFS['alien-1'].shipSpeed,
+        speed = ENTITY_DEFS['alien-1'].speed,
     })
     self.alien.stateMachine = StateMachine({
         ['static'] = function() return AlienStaticState(self.alien) end,
