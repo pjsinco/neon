@@ -37,6 +37,9 @@ function Terrain:render()
         table.insert(self.gridYs, #self.gridYs + 1, newY)
         self.leadingX = self.leadingX + TILE_SIZE -- reset leadingX
     end
+
+    love.graphics.setColor({ 255, 255, 255, 255 })
+
 end
 
 --[[

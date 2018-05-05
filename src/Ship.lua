@@ -20,7 +20,6 @@ function Ship:update(dt)
             texture = ENTITY_DEFS['projectile-1'].texture,
             animations = ENTITY_DEFS['projectile-1'].animations,
         }))
-
     end
 
     for _, projectile in pairs(self.projectiles) do
