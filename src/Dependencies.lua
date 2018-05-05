@@ -22,7 +22,8 @@ require 'src/Entity'
 require 'src/Ship'
 require 'src/AlienShip'
 require 'src/Terrain'
-require 'src/TerrainTile'
+require 'src/Projectile'
+--require 'src/TerrainTile'
 
 require 'src/entity_defs'
 
@@ -34,12 +35,14 @@ gTextures = {
     ['afterburners'] = love.graphics.newImage('graphics/afterburners-1.png'),
     ['alien-ship-1'] = love.graphics.newImage('graphics/alien-ship-1.png'),
     ['alien-ship-1'] = love.graphics.newImage('graphics/alien-ship-1.png'),
+    ['projectile-1'] = love.graphics.newImage('graphics/projectiles.png'),
 }
 
 gFrames = {
     ['ship'] = GenerateQuads(gTextures['ship'], 21, 34),
     ['afterburners'] = GenerateQuads(gTextures['afterburners'], 10, 7),
     ['alien-ship-1'] = GenerateQuads(gTextures['alien-ship-1'], 26, 22),
+    ['projectile-1'] = GenerateQuads(gTextures['projectile-1'], 6, 3),
 }
 
 gFonts = {
@@ -50,7 +53,6 @@ gFonts = {
         " abcdefghijklmnopqrstuvwxyz" ..
         "ABCDEFGHIJKLMNOPQRSTUVWXYZ0" ..
         "123456789.,!?-+/():;%&`'*#=[]\"")
-
 }
 
 gSounds = {
