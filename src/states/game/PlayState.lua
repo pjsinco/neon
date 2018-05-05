@@ -13,16 +13,16 @@ function PlayState:init(params)
     })
     self.ship:changeState('idle')
 
---    self.alien = AlienShip({ 
---        x = VIRTUAL_WIDTH - 16, 
---        y = VIRTUAL_HEIGHT / 2,
---        animations = ENTITY_DEFS['alien-1'].animations,
---        speed = ENTITY_DEFS['alien-1'].shipSpeed,
---    })
---    self.alien.stateMachine = StateMachine({
---        ['moving'] = function() return AlienMovingState(self.alien) end,
---    })
---    self.alien:changeState('moving')
+    self.alien = AlienShip({ 
+        x = VIRTUAL_WIDTH - 16, 
+        y = VIRTUAL_HEIGHT / 2,
+        animations = ENTITY_DEFS['alien-1'].animations,
+        speed = ENTITY_DEFS['alien-1'].shipSpeed,
+    })
+    self.alien.stateMachine = StateMachine({
+        ['static'] = function() return AlienStaticState(self.alien) end,
+    })
+    self.alien:changeState('static')
 
     self.terrain = Terrain()
 end
@@ -33,12 +33,12 @@ end
 
 function PlayState:update(dt)
     self.ship:update(dt)
-    --self.alien:update(dt)
+    self.alien:update(dt)
     self.terrain:update(dt)
 end
 
 function PlayState:render()
     self.ship:render()    
-    --self.alien:render()    
+    self.alien:render()    
     self.terrain:render()
 end

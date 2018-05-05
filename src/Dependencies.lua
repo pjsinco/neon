@@ -16,6 +16,7 @@ require 'src/states/game/TitleScreenState'
 require 'src/states/entity/ShipIdleState'
 require 'src/states/entity/ShipMovingState'
 require 'src/states/entity/AlienMovingState'
+require 'src/states/entity/AlienStaticState'
 
 require 'src/Entity'
 require 'src/Ship'

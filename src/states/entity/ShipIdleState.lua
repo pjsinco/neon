@@ -9,13 +9,10 @@ function ShipIdleState:enter(params)
 end
 
 function ShipIdleState:update(dt)
-    if love.keyboard.isDown('up') then
-        self.ship:changeState('moving')
-    elseif love.keyboard.isDown('down') then
-        self.ship:changeState('moving')
+    if love.keyboard.isDown('up') or
+       love.keyboard.isDown('down') or
+       love.keyboard.isDown('left') or
+       love.keyboard.isDown('right') then 
+            self.ship:changeState('moving')
     end
-end
-
-function ShipIdleState:render()
-    --self.ship:render()
 end
