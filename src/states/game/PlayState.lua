@@ -22,7 +22,6 @@ function PlayState:enter(params)
 end
 
 function PlayState:update(dt)
-print(dt)
     self.ship:update(dt)
     self.wave:update(dt)
     self.terrain:update(dt)
