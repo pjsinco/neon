@@ -15,11 +15,15 @@ require 'src/states/game/TitleScreenState'
 
 require 'src/states/entity/ShipIdleState'
 require 'src/states/entity/ShipMovingState'
+require 'src/states/entity/AlienMovingState'
 
+require 'src/Entity'
 require 'src/Ship'
 require 'src/AlienShip'
 require 'src/Terrain'
 require 'src/TerrainTile'
+
+require 'src/entity_defs'
 
 Timer = require 'lib/knife/timer'
 
