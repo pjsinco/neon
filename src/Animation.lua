@@ -4,11 +4,14 @@ function Animation:init(params)
     self.frames = params.frames
     self.texture = params.texture
     self.interval = params.interval
-    self.looping = params.looping or true
+    self.looping = params.looping
 
     self.timer = 0
     self.currentFrame = 1
     self.timesPlayed = 0
+
+    -- function to invoke after each animation loop
+    self.after = function() end
 end
 
 function Animation:refresh()
@@ -33,6 +36,7 @@ function Animation:update(dt)
 
             if self.currentFrame == 1 then
                 self.timesPlayed = self.timesPlayed + 1
+                self.after()
             end
         end
     end

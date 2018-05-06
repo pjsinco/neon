@@ -7,6 +7,13 @@ function Ship:init(params)
     self.height = 34
 
     self.projectiles = {}
+
+    Event.on('player-collided-with-alien', function()
+        Chain( 
+            self:generateExplode(), 
+            self:generateDeactivate()
+        )()
+    end)
 end
 
 function Ship:update(dt)
@@ -16,6 +23,8 @@ function Ship:update(dt)
         table.insert(self.projectiles, Projectile({
             x = self.x + self.width,
             y = self.y + (self.height / 2),
+            width = ENTITY_DEFS['projectile-1'].width,
+            height = ENTITY_DEFS['projectile-1'].height,
             speed = ENTITY_DEFS['projectile-1'].speed,
             texture = ENTITY_DEFS['projectile-1'].texture,
             animations = ENTITY_DEFS['projectile-1'].animations,
@@ -31,5 +40,8 @@ function Ship:render()
     for _, projectile in pairs(self.projectiles) do
         projectile:render(dt)
     end
-    Entity.render(self)
+
+    --if self.active then
+        Entity.render(self)
+    --end
 end

@@ -7,11 +7,27 @@ function Entity:init(params)
     self.animations = self:createAnimations(params.animations)
     self.dx = params.speed
     self.dy = params.speed
+    self.active = true
 end
 
 function Entity:update(dt)
     if self.stateMachine ~= nil then
         self.stateMachine:update(dt)
+    end
+end
+
+-- Use with knife.chain
+function Entity:generateExplode()
+    return function(go)
+        self:changeAnimation('exploding', go)
+    end
+end
+
+-- Use with knife.chain
+function Entity:generateDeactivate()
+    return function(go)
+        self.active = false
+        return go
     end
 end
 
@@ -22,18 +38,24 @@ function Entity:createAnimations(animations)
         toReturn[k] = Animation({
             texture = animDef.texture,
             frames = animDef.frames,
-            interval = animDef.interval
+            interval = animDef.interval,
+            looping = animDef.looping,
         })
     end
 
     return toReturn
 end
 
-function Entity:changeAnimation(animation)
+function Entity:changeAnimation(animation, callback)
     self.currentAnimation = self.animations[animation]
+    self.currentAnimation.after = callback or function() end
 end
 
 function Entity:render()
+    if not self.active then
+        return
+    end
+
     local texture = self.currentAnimation.texture
     local frame = gFrames[texture][self.currentAnimation:getCurrentFrame()]
     love.graphics.draw(gTextures[texture],

@@ -20,6 +20,18 @@ function Wave:update(dt)
     self.player:update(dt)
 
     for _, alien in pairs(self.aliens) do
+        if alien.active and self.player:collides(alien) then
+            Event.dispatch('player-collided-with-alien', player, alien)
+        end
+    
+        for _, projectile in pairs(self.player.projectiles) do
+            if alien.active and projectile:collides(alien) then
+                Event.dispatch('alien-collided-with-projectile',
+                               alien,
+                               projectile)
+            end
+        end
+
         alien:update(dt)
     end
 end

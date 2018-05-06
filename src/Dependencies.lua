@@ -29,6 +29,8 @@ require 'src/Wave'
 require 'src/entity_defs'
 
 Timer = require 'lib/knife/timer'
+Event = require 'lib/knife/event'
+Chain = require 'lib/knife/chain'
 
 gTextures = {
     ['ship'] = love.graphics.newImage('graphics/spaceships-2.png'),
@@ -39,7 +41,7 @@ gTextures = {
     ['alien-ship-green'] = 
         love.graphics.newImage('graphics/alien-ships-green-1.png'),
     ['projectile-1'] = love.graphics.newImage('graphics/projectiles.png'),
-    ['explosions'] = love.graphics.newImage('graphics/explosions.png'),
+    ['explosion'] = love.graphics.newImage('graphics/explosions.png'),
 }
 
 gFrames = {
@@ -51,7 +53,7 @@ gFrames = {
     ['alien-ship-gray'] = 
         GenerateQuads(gTextures['alien-ship-gray'], 18, 20),
     ['projectile-1'] = GenerateQuads(gTextures['projectile-1'], 6, 3),
-    ['explosions'] = GenerateQuads(gTextures['explosions'], 16, 16),
+    ['explosion'] = GenerateQuads(gTextures['explosion'], 16, 16),
 }
 
 gFonts = {
