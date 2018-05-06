@@ -27,6 +27,8 @@ function Ship:update(dt)
     Entity.update(self, dt)
 
     if love.keyboard.wasPressed('space') then
+        gSounds['laser-1']:stop()
+        gSounds['laser-1']:play()
         table.insert(self.projectiles, Projectile({
             x = self.x + self.width,
             y = self.y + (self.height / 2),

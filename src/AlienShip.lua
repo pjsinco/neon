@@ -8,12 +8,16 @@ function AlienShip:init(params)
 
     Event.on('alien-collided-with-projectile', function(alien, _) 
         if alien == self then
+            gSounds['explosion-1']:stop()
+            gSounds['explosion-1']:play()
             Chain( self:generateExplode(), self:generateDeactivate() )()
         end
     end)
 
     Event.on('player-collided-with-alien', function(_, alien) 
         if alien == self then
+            gSounds['explosion-1']:stop()
+            gSounds['explosion-1']:play()
             Chain( self:generateExplode(), self:generateDeactivate() )()
         end
     end)

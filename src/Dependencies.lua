@@ -69,6 +69,8 @@ gFonts = {
 }
 
 gSounds = {
+    ['explosion-1'] = love.audio.newSource('sounds/Explosion13.wav', 'static'),
+    ['laser-1'] = love.audio.newSource('sounds/Laser_Shoot12.wav', 'static'),
     --['score'] = love.audio.newSource('sounds/score.wav', 'static'),
     --['music'] = love.audio.newSource('sounds/marios_way.mp3', 'static'),
 }
