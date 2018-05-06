@@ -9,7 +9,7 @@ function TitleScreenState:update(dt)
        love.keyboard.wasPressed('return') then
         --TODO Revert to 'countdown'
         --gStateMachine:change('countdown')
-        gStateMachine:change('play')
+        gStateMachine:change('play', { score = 0 })
     end
         
 end
