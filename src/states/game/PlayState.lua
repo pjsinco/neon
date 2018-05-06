@@ -14,10 +14,12 @@ function PlayState:init(params)
     self.player:changeState('idle')
 
     self.wave = Wave(self.player)
+
+    self.score = 0
 end
 
 function PlayState:enter(params)
-    
+    self.score = params.score or 0
 end
 
 function PlayState:update(dt)
@@ -25,5 +27,10 @@ function PlayState:update(dt)
 end
 
 function PlayState:render()
-    self.wave:render()    
+    -- show score
+    love.graphics.print(tostring(self.score),
+                        SCREEN_PADDING_LEFT,
+                        SCREEN_PADDING_TOP)
+
+    self.wave:render()
 end
