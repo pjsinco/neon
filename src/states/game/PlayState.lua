@@ -16,6 +16,10 @@ function PlayState:init(params)
     self.wave = Wave(self.player)
 
     self.score = 0
+
+    Event.on('scored', function(amount)
+        self.score = self.score + amount
+    end)
 end
 
 function PlayState:enter(params)

@@ -30,6 +30,7 @@ ENTITY_DEFS = {
     },
     ['alien-1'] = {
         speed = SCROLL_SPEED,
+        value = 100,
         animations = {
             ['static'] = {
                 frames = { 3, 2, 1, 2 },

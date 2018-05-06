@@ -23,10 +23,6 @@ function Wave:update(dt)
         Event.dispatch('player-collided-with-terrain', player)
     end
 
-    --if (self.terrain:collides(self.player)) then
-        --Event.dispatch('player-collided-with-terrain', player)
-    --end
-
     for _, alien in pairs(self.aliens) do
         if alien.active and self.player.active and self.player:collides(alien) then
             Event.dispatch('player-collided-with-alien', player, alien)
@@ -61,6 +57,7 @@ function Wave:spawnAlien(params)
         y = params.y,
         animations = ENTITY_DEFS['alien-1'].animations,
         speed = ENTITY_DEFS['alien-1'].speed,
+        value = ENTITY_DEFS['alien-1'].value,
     })
 
     alien.stateMachine = StateMachine({
