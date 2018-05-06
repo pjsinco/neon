@@ -5,9 +5,16 @@ function AlienShip:init(params)
 
     self.width = 26
     self.height = 22
+    self.value = params.value
 
     Event.on('alien-collided-with-projectile', function(alien, _) 
+
         if alien == self then
+            if not self.hit then
+                Event.dispatch('scored', self.value)
+            end
+            self.hit = true
+
             gSounds['explosion-1']:stop()
             gSounds['explosion-1']:play()
             Chain( self:generateExplode(), self:generateDeactivate() )()
