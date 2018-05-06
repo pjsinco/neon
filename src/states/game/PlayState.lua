@@ -15,7 +15,8 @@ function PlayState:init(params)
 
     self.wave = Wave(self.player)
 
-    self.score = 0
+    self.score = nil 
+    self.lives = nil
 
     Event.on('scored', function(amount)
         self.score = self.score + amount
@@ -24,6 +25,7 @@ end
 
 function PlayState:enter(params)
     self.score = params.score or 0
+    self.lives = params.lives or STARTING_LIVES
 end
 
 function PlayState:update(dt)
@@ -35,6 +37,11 @@ function PlayState:render()
     love.graphics.print(tostring(self.score),
                         SCREEN_PADDING_LEFT,
                         SCREEN_PADDING_TOP)
+
+    love.graphics.print(tostring(self.lives),
+                        VIRTUAL_WIDTH - SCREEN_PADDING_RIGHT - IMAGE_FONT_WIDTH,
+                        SCREEN_PADDING_TOP)
+
 
     self.wave:render()
 end
