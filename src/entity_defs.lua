@@ -20,6 +20,12 @@ ENTITY_DEFS = {
                 texture = 'ship',
                 looping = true,
             },
+            ['exploding'] = {
+                frames = { 8, 7, 6, 5, 4, 3, 2, 1 },
+                interval = 0.07,
+                looping = false,
+                texture = 'explosion',
+            }
         }
     },
     ['alien-1'] = {

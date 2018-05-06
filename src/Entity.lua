@@ -16,6 +16,21 @@ function Entity:update(dt)
     end
 end
 
+-- Use with knife.chain
+function Entity:generateExplode()
+    return function(go)
+        self:changeAnimation('exploding', go)
+    end
+end
+
+-- Use with knife.chain
+function Entity:generateDeactivate()
+    return function(go)
+        self.active = false
+        return go
+    end
+end
+
 function Entity:createAnimations(animations)
     local toReturn = {}
 
