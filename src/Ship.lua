@@ -8,7 +8,14 @@ function Ship:init(params)
 
     self.projectiles = {}
 
-    Event.on('player-collided-with-alien', function()
+    Event.on('player-collided-with-terrain', function(player)
+        Chain( 
+            self:generateExplode(), 
+            self:generateDeactivate()
+        )()
+    end)
+
+    Event.on('player-collided-with-alien', function(player)
         Chain( 
             self:generateExplode(), 
             self:generateDeactivate()
@@ -41,7 +48,10 @@ function Ship:render()
         projectile:render(dt)
     end
 
-    --if self.active then
-        Entity.render(self)
-    --end
+    Entity.render(self)
+end
+
+function Ship:collidesWithTerrain(terrain)
+    local terrainHitbox = terrain:getLocalHitbox(self.x, self.width)
+    return Entity.collides(self, terrainHitbox)
 end

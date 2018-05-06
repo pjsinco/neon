@@ -15,6 +15,7 @@ end
 function Terrain:update(dt)
     self.leadingX = self.leadingX - self.dx * dt
 
+    -- Make sure we're removing terrain when we dont' need it anymore
     assert(#self.gridYs < self.width + 10, 'Failed to remove unneeded terrain')
 end
 
@@ -32,13 +33,23 @@ function Terrain:render()
     end
 
     if self.leadingX < (0 - TILE_SIZE * 2) then
-        local newY = self:generateY(self.gridYs[#self.gridYs]) -- based on the final y
+        -- based on the final y
+        local newY = self:generateY(self.gridYs[#self.gridYs]) 
+
         table.remove(self.gridYs, 1)
         table.insert(self.gridYs, #self.gridYs + 1, newY)
         self.leadingX = self.leadingX + TILE_SIZE -- reset leadingX
     end
 
     love.graphics.setColor({ 255, 255, 255, 255 })
+
+    -- debug for player and hurtbox collision rects
+    -- love.graphics.setColor(255, 0, 255, 255)
+    -- love.graphics.rectangle('line', self.player.x, self.player.y, self.player.width, self.player.height)
+    -- love.graphics.rectangle('line', self.swordHurtbox.x, self.swordHurtbox.y,
+    --     self.swordHurtbox.width, self.swordHurtbox.height)
+    -- love.graphics.setColor(255, 255, 255, 255)
+
 
 end
 
@@ -73,6 +84,37 @@ function Terrain:generateY(yBase)
     return yBase
 end
 
+--[[
+   Create a hitbox, of the passed-in width, over the portion of the terrain
+   starting at x. 
+]]
+function Terrain:getLocalHitbox(x, width)
+    local gridY = self:pointToTile(x)
+    local worldY = self:tileToPoint(gridY) 
+    return Hitbox(x, worldY, width, TILE_SIZE * 2)
+end
+
+--[[
+   Return the y value in world space of the given grid-y value
+]]
+function Terrain:tileToPoint(y)
+    return VIRTUAL_HEIGHT - (TILE_SIZE * y)
+end
+
+--[[
+   Return the grid-y value of the given x in world space
+]]
+function Terrain:pointToTile(x)
+    if x < 0 or 
+       x > self.width * TILE_SIZE then
+       --y < 0 or 
+       --y > self.height * TILE_SIZE then
+        return nil
+    end
+    
+    return self.gridYs[math.floor(x / TILE_SIZE) + 1]
+end
+
 -- TODO Needed?
 function Terrain:generateColumn(len, x)
     local col = {}
@@ -88,3 +130,4 @@ function Terrain:generateColumn(len, x)
 
     return col
 end
+

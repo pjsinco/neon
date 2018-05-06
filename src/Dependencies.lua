@@ -25,6 +25,8 @@ require 'src/AlienShip'
 require 'src/Terrain'
 require 'src/Projectile'
 require 'src/Wave'
+require 'src/Hurtbox'
+require 'src/Hitbox'
 
 require 'src/entity_defs'
 
