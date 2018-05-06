@@ -19,8 +19,16 @@ function Wave:update(dt)
     self.terrain:update(dt)
     self.player:update(dt)
 
+    if self.player.active and self.player:collidesWithTerrain(self.terrain) then
+        Event.dispatch('player-collided-with-terrain', player)
+    end
+
+    --if (self.terrain:collides(self.player)) then
+        --Event.dispatch('player-collided-with-terrain', player)
+    --end
+
     for _, alien in pairs(self.aliens) do
-        if alien.active and self.player:collides(alien) then
+        if alien.active and self.player.active and self.player:collides(alien) then
             Event.dispatch('player-collided-with-alien', player, alien)
         end
     
@@ -34,6 +42,8 @@ function Wave:update(dt)
 
         alien:update(dt)
     end
+
+    --TODO reverse iterate over aliens and remove inactive ones
 end
 
 function Wave:render()
