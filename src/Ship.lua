@@ -7,11 +7,30 @@ function Ship:init(params)
     self.height = 34
     self.projectiles = {}
     self.inPlay = true
+
+    Event.on('player-collided', function(player, other)
+        Chain( 
+            function(go)
+                player:changeState('idle') 
+                player.inPlay = false
+                gSounds['explosion-1']:stop()
+                gSounds['explosion-1']:play()
+                go()
+            end,
+            player:generateExplode(), 
+            function(go)
+                player.x = 16
+                player.y = VIRTUAL_HEIGHT / 2 - (player.height / 2)
+                player:changeState('moving')
+                player.inPlay = true
+                go()
+            end
+        )()
+    end)
 end
 
 function Ship:update(dt)
     Entity.update(self, dt)
-    --print(self.currentAnimation.texture .. ': ' .. self.currentAnimation:getCurrentFrame() .. ' - ' .. tostring(self.inPlay) .. ' - ' .. tostring(self.active))
 
     if self.inPlay and love.keyboard.wasPressed('space') then
         gSounds['laser-1']:stop()

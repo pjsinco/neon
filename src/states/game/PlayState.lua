@@ -23,24 +23,28 @@ function PlayState:init(params)
     end)
 
     Event.on('player-collided', function(player, other)
-        Chain( 
-            function(go)
-                player:changeState('idle') 
-                player.inPlay = false
-                gSounds['explosion-1']:stop()
-                gSounds['explosion-1']:play()
-                go()
-            end,
-            player:generateExplode(), 
-            function(go)
-                player.x = 16
-                player.y = VIRTUAL_HEIGHT / 2 - (player.height / 2)
-                player:changeState('moving')
-                player.inPlay = true
-                go()
-            end
-        )()
+        self.player.lives = self.player.lives - 1
     end)
+
+--    Event.on('player-collided', function(player, other)
+--        Chain( 
+--            function(go)
+--                player:changeState('idle') 
+--                player.inPlay = false
+--                gSounds['explosion-1']:stop()
+--                gSounds['explosion-1']:play()
+--                go()
+--            end,
+--            player:generateExplode(), 
+--            function(go)
+--                player.x = 16
+--                player.y = VIRTUAL_HEIGHT / 2 - (player.height / 2)
+--                player:changeState('moving')
+--                player.inPlay = true
+--                go()
+--            end
+--        )()
+--    end)
 end
 
 function PlayState:enter(params)
