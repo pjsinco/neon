@@ -13,10 +13,20 @@ function PlayState:init(params)
     })
     self.player:changeState('moving')
 
-    self.wave = Wave(self.player)
+    self.waveCount = 1
+    --self.level = 1
+
+    self.wave = Wave(self.player, WAVE_DEFS['zigzag'])
 
     self.score = nil 
     self.player.lives = nil
+
+    Event.on('wave-completed', function(waveIndex)
+print('heardwavecompleted')
+        self.waveCount = self.waveCount + 1
+        --TODO Launch next wave
+        self.wave = Wave(self.player, WAVE_DEFS['zigzag-2'])
+    end)
 
     Event.on('scored', function(amount)
         self.score = self.score + amount
@@ -25,26 +35,6 @@ function PlayState:init(params)
     Event.on('player-collided', function(player, other)
         self.player.lives = self.player.lives - 1
     end)
-
---    Event.on('player-collided', function(player, other)
---        Chain( 
---            function(go)
---                player:changeState('idle') 
---                player.inPlay = false
---                gSounds['explosion-1']:stop()
---                gSounds['explosion-1']:play()
---                go()
---            end,
---            player:generateExplode(), 
---            function(go)
---                player.x = 16
---                player.y = VIRTUAL_HEIGHT / 2 - (player.height / 2)
---                player:changeState('moving')
---                player.inPlay = true
---                go()
---            end
---        )()
---    end)
 end
 
 function PlayState:enter(params)
@@ -62,9 +52,17 @@ function PlayState:render()
                         SCREEN_PADDING_LEFT,
                         SCREEN_PADDING_TOP)
 
+    -- show lives left
     love.graphics.print(tostring(self.player.lives),
                         VIRTUAL_WIDTH - SCREEN_PADDING_RIGHT - IMAGE_FONT_WIDTH,
                         SCREEN_PADDING_TOP)
+
+    -- show wave number
+    love.graphics.printf('Wave ' .. tostring(self.waveCount),
+                         0,
+                         SCREEN_PADDING_TOP,
+                         VIRTUAL_WIDTH - SCREEN_PADDING_RIGHT - SCREEN_PADDING_LEFT,
+                         "center")
 
 
     self.wave:render()

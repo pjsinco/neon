@@ -29,6 +29,7 @@ require 'src/Hurtbox'
 require 'src/Hitbox'
 
 require 'src/entity_defs'
+require 'src/wave_defs'
 
 Timer = require 'lib/knife/timer'
 Event = require 'lib/knife/event'

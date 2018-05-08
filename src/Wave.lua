@@ -1,11 +1,13 @@
 Wave = Class({})
 
-function Wave:init(player)
+function Wave:init(player, defs)
     self.player = player
     self.terrain = Terrain()
     self.aliens = {}
+    self.alienCount = defs.alienCount
+    self.duration = defs.duration
+    self.speedMultiplier = defs.speedMultiplier
 
-    self.alienCount = 8
     for i = 1, self.alienCount do
         local alien = self:spawnAlien({
             x = (i % 2 == 0) and VIRTUAL_WIDTH - 18 or VIRTUAL_WIDTH - 54,
@@ -13,9 +15,14 @@ function Wave:init(player)
         })
         table.insert(self.aliens, alien)
     end
+
+    Timer.after(self.duration, function() 
+        Event.dispatch('wave-completed')
+    end)
 end
 
 function Wave:update(dt)
+    Timer.update(dt)
     self.terrain:update(dt)
     self.player:update(dt)
 
@@ -54,7 +61,7 @@ function Wave:spawnAlien(params)
         x = params.x, 
         y = params.y,
         animations = ENTITY_DEFS['alien-1'].animations,
-        speed = ENTITY_DEFS['alien-1'].speed,
+        speed = ENTITY_DEFS['alien-1'].speed * self.speedMultiplier,
         value = ENTITY_DEFS['alien-1'].value,
     })
 
