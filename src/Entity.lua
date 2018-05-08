@@ -8,6 +8,7 @@ function Entity:init(params)
     self.dx = params.speed
     self.dy = params.speed
     self.active = true
+    self.hit = false
 end
 
 function Entity:update(dt)
@@ -20,6 +21,7 @@ end
 function Entity:generateExplode()
     return function(go)
         self:changeAnimation('exploding', go)
+        self.currentAnimation:refresh()
     end
 end
 
@@ -48,6 +50,7 @@ end
 
 function Entity:changeAnimation(animation, callback)
     self.currentAnimation = self.animations[animation]
+    --self.currentAnimation:refresh()
     self.currentAnimation.after = callback or function() end
 end
 

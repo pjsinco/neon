@@ -13,8 +13,8 @@ function AlienMovingState:enter(params)
 end
 
 function AlienMovingState:update(dt)
-    if self.alien.y <= self.alien.minY or
-       self.alien.y >= self.alien.maxY then
+    if self.alien.y < self.alien.minY or
+       self.alien.y > self.alien.maxY then
         self.alien.dy = -self.alien.dy
     end
 

@@ -1,6 +1,7 @@
 ENTITY_DEFS = {
     ['player'] = {
         speed = SHIP_SPEED,
+        category = 'player',
         animations = {
             ['idle'] = {
                 frames = { 1 },
@@ -30,6 +31,7 @@ ENTITY_DEFS = {
     },
     ['alien-1'] = {
         speed = SCROLL_SPEED,
+        category = 'alien',
         value = 100,
         animations = {
             ['static'] = {
@@ -55,6 +57,7 @@ ENTITY_DEFS = {
     ['projectile-1'] = {
         speed = SHIP_PROJECTILE_SPEED,
         width = 6,
+        category = 'projectile',
         height = 3,
         animations = {
             ['glowing'] = {

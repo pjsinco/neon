@@ -7,22 +7,26 @@ function AlienShip:init(params)
     self.height = 22
     self.value = params.value
 
-    Event.on('alien-collided-with-projectile', function(alien, _) 
-
+    Event.on('alien-collided', function(alien, other) 
         if alien == self then
             if not self.hit then
                 Event.dispatch('scored', self.value)
             end
             self.hit = true
-
+            self.dx, self.dy = 0, 0
             gSounds['explosion-1']:stop()
             gSounds['explosion-1']:play()
             Chain( self:generateExplode(), self:generateDeactivate() )()
         end
     end)
 
-    Event.on('player-collided-with-alien', function(_, alien) 
-        if alien == self then
+    Event.on('player-collided', function(player, other) 
+        if other == self then
+            if not self.hit then
+                Event.dispatch('scored', self.value)
+            end
+            self.hit = true
+            self.dx, self.dy = 0, 0
             gSounds['explosion-1']:stop()
             gSounds['explosion-1']:play()
             Chain( self:generateExplode(), self:generateDeactivate() )()
@@ -36,14 +40,5 @@ function AlienShip:update(dt)
 end
 
 function AlienShip:render()
-    --if self.active then
-        Entity.render(self)
-    --end
-end
-
-function AlienShip:onCollide(finish)
-    Entity.onCollide(self)
-    self:changeAnimation('exploding')
-    self.dx, self.dy = 0, 0
-    finish()
+    Entity.render(self)
 end

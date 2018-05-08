@@ -19,20 +19,18 @@ function Wave:update(dt)
     self.terrain:update(dt)
     self.player:update(dt)
 
-    if self.player.active and self.player:collidesWithTerrain(self.terrain) then
-        Event.dispatch('player-collided-with-terrain', player)
+    if self.player.inPlay and self.player:collidesWithTerrain(self.terrain) then
+        Event.dispatch('player-collided', self.player, self.terrain)
     end
 
     for _, alien in pairs(self.aliens) do
-        if alien.active and self.player.active and self.player:collides(alien) then
-            Event.dispatch('player-collided-with-alien', player, alien)
+        if alien.active and self.player.inPlay and self.player:collides(alien) then
+            Event.dispatch('player-collided', self.player, alien)
         end
     
         for _, projectile in pairs(self.player.projectiles) do
             if alien.active and projectile:collides(alien) then
-                Event.dispatch('alien-collided-with-projectile',
-                               alien,
-                               projectile)
+                Event.dispatch('alien-collided', alien, projectile)
             end
         end
 
