@@ -11,21 +11,39 @@ function PlayState:init(params)
         ['idle'] = function() return ShipIdleState(self.player) end,
         ['moving'] = function() return ShipMovingState(self.player) end,
     })
-    self.player:changeState('idle')
+    self.player:changeState('moving')
 
     self.wave = Wave(self.player)
 
     self.score = nil 
-    self.lives = nil
+    self.player.lives = nil
 
     Event.on('scored', function(amount)
         self.score = self.score + amount
+    end)
+
+    Event.on('player-collided', function(player, other)
+        Chain( 
+            function(go)
+                player:changeState('idle') 
+                player.inPlay = false
+                go()
+            end,
+            player:generateExplode(), 
+            function(go)
+                player.x = 16
+                player.y = VIRTUAL_HEIGHT / 2 - (player.height / 2)
+                player:changeState('moving')
+                player.inPlay = true
+                go()
+            end
+        )()
     end)
 end
 
 function PlayState:enter(params)
     self.score = params.score or 0
-    self.lives = params.lives or STARTING_LIVES
+    self.player.lives = params.lives or STARTING_LIVES
 end
 
 function PlayState:update(dt)
@@ -38,7 +56,7 @@ function PlayState:render()
                         SCREEN_PADDING_LEFT,
                         SCREEN_PADDING_TOP)
 
-    love.graphics.print(tostring(self.lives),
+    love.graphics.print(tostring(self.player.lives),
                         VIRTUAL_WIDTH - SCREEN_PADDING_RIGHT - IMAGE_FONT_WIDTH,
                         SCREEN_PADDING_TOP)
 

@@ -3,7 +3,7 @@ Terrain = Class({})
 function Terrain:init(params)
     self.width = math.floor(VIRTUAL_WIDTH / TILE_SIZE)
     self.maxHeight = math.floor(VIRTUAL_HEIGHT / TILE_SIZE)
-
+    self.category = 'terrain' -- identifier for event handling
     self.gridX = 0 -- starting x position for terrain
     self.gridYs = self:generateGridYs(self.width + 1) -- table of y values
     

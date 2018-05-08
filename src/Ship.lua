@@ -5,28 +5,15 @@ function Ship:init(params)
 
     self.width = 21
     self.height = 34
-
     self.projectiles = {}
-
-    Event.on('player-collided-with-terrain', function(player)
-        Chain( 
-            self:generateExplode(), 
-            self:generateDeactivate()
-        )()
-    end)
-
-    Event.on('player-collided-with-alien', function(player)
-        Chain( 
-            self:generateExplode(), 
-            self:generateDeactivate()
-        )()
-    end)
+    self.inPlay = true
 end
 
 function Ship:update(dt)
     Entity.update(self, dt)
+    --print(self.currentAnimation.texture .. ': ' .. self.currentAnimation:getCurrentFrame() .. ' - ' .. tostring(self.inPlay) .. ' - ' .. tostring(self.active))
 
-    if love.keyboard.wasPressed('space') then
+    if self.inPlay and love.keyboard.wasPressed('space') then
         gSounds['laser-1']:stop()
         gSounds['laser-1']:play()
         table.insert(self.projectiles, Projectile({
