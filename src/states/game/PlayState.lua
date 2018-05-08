@@ -27,6 +27,8 @@ function PlayState:init(params)
             function(go)
                 player:changeState('idle') 
                 player.inPlay = false
+                gSounds['explosion-1']:stop()
+                gSounds['explosion-1']:play()
                 go()
             end,
             player:generateExplode(), 
