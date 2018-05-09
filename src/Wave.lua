@@ -8,6 +8,25 @@ function Wave:init(player, defs, terrain)
     self.duration = defs.duration
     self.speedMultiplier = defs.speedMultiplier
 
+    self.rockets = {}
+
+    local rocket = Rocket({
+        x = TILE_SIZE * 50,
+        y = math.floor(self.terrain:tileToPoint(self.terrain.gridYs[50]) - 10),
+        width = ENTITY_DEFS['rocket-1'].width,
+        height = ENTITY_DEFS['rocket-1'].height,
+        speed = ENTITY_DEFS['rocket-1'].speed,
+        texture = ENTITY_DEFS['rocket-1'].texture,
+        animations = ENTITY_DEFS['rocket-1'].animations,
+    })
+    rocket.stateMachine = StateMachine({
+        ['idle'] = function() return RocketIdleState(rocket) end,
+        ['flying'] = function() return RocketFlyingState(rocket) end,
+    })
+    rocket:changeState('idle')
+
+    table.insert(self.rockets, rocket)
+
     for i = 1, self.alienCount do
         local alien = self:spawnAlien({
             x = (i % 2 == 0) and VIRTUAL_WIDTH - 18 or VIRTUAL_WIDTH - 54,
@@ -26,8 +45,17 @@ function Wave:update(dt)
     self.terrain:update(dt)
     self.player:update(dt)
 
+
     if self.player.inPlay and self.player:collidesWithTerrain(self.terrain) then
         Event.dispatch('player-collided', self.player, self.terrain)
+    end
+
+    for _, rocket in pairs(self.rockets) do
+        if self.player.inPlay and rocket:collides(self.player) then
+            Event.dispatch('player-collided', self.player, rocket)
+        end
+
+        rocket:update(dt)
     end
 
     for _, alien in pairs(self.aliens) do
@@ -50,6 +78,10 @@ end
 function Wave:render()
     self.terrain:render()
     self.player:render()
+
+    for _, rocket in pairs(self.rockets) do
+        rocket:render()
+    end
 
     for _, alien in pairs(self.aliens) do
         alien:render()
