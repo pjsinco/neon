@@ -8,24 +8,8 @@ function Wave:init(player, defs, terrain)
     self.duration = defs.duration
     self.speedMultiplier = defs.speedMultiplier
 
+    --self.rockets = self:createRockets(defs.rocketCount)
     self.rockets = {}
-
-    local rocket = Rocket({
-        x = TILE_SIZE * 50,
-        y = math.floor(self.terrain:tileToPoint(self.terrain.gridYs[50]) - 10),
-        width = ENTITY_DEFS['rocket-1'].width,
-        height = ENTITY_DEFS['rocket-1'].height,
-        speed = ENTITY_DEFS['rocket-1'].speed,
-        texture = ENTITY_DEFS['rocket-1'].texture,
-        animations = ENTITY_DEFS['rocket-1'].animations,
-    })
-    rocket.stateMachine = StateMachine({
-        ['idle'] = function() return RocketIdleState(rocket) end,
-        ['flying'] = function() return RocketFlyingState(rocket) end,
-    })
-    rocket:changeState('idle')
-
-    table.insert(self.rockets, rocket)
 
     for i = 1, self.alienCount do
         local alien = self:spawnAlien({
@@ -37,6 +21,10 @@ function Wave:init(player, defs, terrain)
 
     Timer.after(self.duration, function() 
         Event.dispatch('wave-completed')
+    end)
+
+    Timer.every(1, function()
+        self:maybeSpawnRocket(#self.terrain.gridYs - 1, ENTITY_DEFS['rocket-1']) 
     end)
 end
 
@@ -53,6 +41,7 @@ function Wave:update(dt)
     for _, rocket in pairs(self.rockets) do
         if self.player.inPlay and rocket:collides(self.player) then
             Event.dispatch('player-collided', self.player, rocket)
+            rocket.active = false
         end
 
         rocket:update(dt)
@@ -64,8 +53,9 @@ function Wave:update(dt)
         end
     
         for _, projectile in pairs(self.player.projectiles) do
-            if alien.active and projectile:collides(alien) then
+            if not alien.hit and projectile:collides(alien) then
                 Event.dispatch('alien-collided', alien, projectile)
+                projectile.active = false
             end
         end
 
@@ -105,3 +95,25 @@ function Wave:spawnAlien(params)
     
     return alien
 end
+
+function Wave:maybeSpawnRocket(terrainIndex, rocketDef)
+    if (math.random(2) == 1) then
+        local rocket = Rocket({
+            x = TILE_SIZE * terrainIndex,
+            y = self.terrain:tileToPoint(self.terrain.gridYs[terrainIndex]) - 10,
+            width      = rocketDef.width,
+            height     = rocketDef.height,
+            speed      = rocketDef.speed,
+            texture    = rocketDef.texture,
+            animations = rocketDef.animations,
+        })
+        rocket.stateMachine = StateMachine({
+            ['idle'] = function() return RocketIdleState(rocket) end,
+            ['flying'] = function() return RocketFlyingState(rocket) end,
+        })
+        rocket:changeState('idle')
+print_r('x: ' .. rocket.x .. ', y: ' .. rocket.y)
+        table.insert(self.rockets, rocket)
+    end
+end
+

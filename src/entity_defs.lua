@@ -84,7 +84,7 @@ ENTITY_DEFS = {
                 frames = { 2, 3 },
                 interval = 0.15,
                 texture = 'rocket',
-                looping = false,
+                looping = true,
             },
         }
     }
