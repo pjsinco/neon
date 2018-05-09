@@ -68,4 +68,24 @@ ENTITY_DEFS = {
             },
         }
     },
+    ['rocket-1'] = {
+        speed = -120,
+        width = 9,
+        category = 'projectile',
+        height = 17,
+        animations = {
+            ['idle'] = {
+                frames = { 1 },
+                interval = 0.15,
+                texture = 'rocket',
+                looping = false,
+            },
+            ['flying'] = {
+                frames = { 2, 3 },
+                interval = 0.15,
+                texture = 'rocket',
+                looping = false,
+            },
+        }
+    }
 }

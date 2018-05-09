@@ -17,6 +17,8 @@ require 'src/states/entity/ShipIdleState'
 require 'src/states/entity/ShipMovingState'
 require 'src/states/entity/AlienMovingState'
 require 'src/states/entity/AlienStaticState'
+require 'src/states/entity/RocketIdleState'
+require 'src/states/entity/RocketFlyingState'
 
 require 'src/Entity'
 require 'src/GameObject'
@@ -24,6 +26,7 @@ require 'src/Ship'
 require 'src/AlienShip'
 require 'src/Terrain'
 require 'src/Projectile'
+require 'src/Rocket'
 require 'src/Wave'
 require 'src/Hurtbox'
 require 'src/Hitbox'
@@ -45,6 +48,7 @@ gTextures = {
         love.graphics.newImage('graphics/alien-ships-green-1.png'),
     ['projectile-1'] = love.graphics.newImage('graphics/projectiles.png'),
     ['explosion'] = love.graphics.newImage('graphics/explosions.png'),
+    ['rocket'] = love.graphics.newImage('graphics/rockets-1.png'),
 }
 
 gFrames = {
@@ -57,12 +61,15 @@ gFrames = {
         GenerateQuads(gTextures['alien-ship-gray'], 18, 20),
     ['projectile-1'] = GenerateQuads(gTextures['projectile-1'], 6, 3),
     ['explosion'] = GenerateQuads(gTextures['explosion'], 16, 16),
+    ['rocket'] = GenerateQuads(gTextures['rocket'], 9, 17),
 }
 
 gFonts = {
     ['small'] = love.graphics.newFont('fonts/font.ttf', 8),
     ['medium'] = love.graphics.newFont('fonts/font.ttf', 16),
     ['large'] = love.graphics.newFont('fonts/font.ttf', 32),
+
+    -- https://love2d.org/wiki/Tutorial:Fonts_and_Text
     ['image'] = love.graphics.newImageFont('fonts/imagefont-1.png',
         " abcdefghijklmnopqrstuvwxyz" ..
         "ABCDEFGHIJKLMNOPQRSTUVWXYZ0" ..
