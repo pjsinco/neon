@@ -10,13 +10,20 @@ function Wave:init(player, defs, terrain, rockets)
     self.duration = defs.duration
     self.speedMultiplier = defs.speedMultiplier
 
+    -- where we can expect there to be no terrain
+    self.liveArea = VIRTUAL_HEIGHT - (self.terrain.maxHeight * TILE_SIZE)
+print(self.liveArea)
+
     --self.rockets = self:createRockets(defs.rocketCount)
     self.rockets = rockets or {}
 
     for i = 1, self.alienCount do
         local alien = self:spawnAlien({
             x = (i % 2 == 0) and VIRTUAL_WIDTH - 18 or VIRTUAL_WIDTH - 54,
-            y = i * ((VIRTUAL_HEIGHT - 20) / self.alienCount),
+            --y = i * ((VIRTUAL_HEIGHT - 20) / self.alienCount),
+
+            -- 30 is an estimate of the alien's vertical range, I think
+            y = i * ((self.liveArea - 30)/ self.alienCount),
         })
         table.insert(self.aliens, alien)
     end
