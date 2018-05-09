@@ -5,7 +5,7 @@ function RocketIdleState:init(rocket)
     self.rocket:changeAnimation('idle')
     self.rocket.dx = -SCROLL_SPEED
 
-    self.timer = Timer.every(1, function()
+    self.timer = Timer.every(2, function()
         if math.random(2) == 1 then
             self.rocket:changeState('flying')
             self.timer:remove()
@@ -22,7 +22,5 @@ function RocketIdleState:processAi(params, dt)
 end
 
 function RocketIdleState:render()
-    love.graphics.setColor({255, 0, 0, 255})
-
     self.rocket:render()
 end

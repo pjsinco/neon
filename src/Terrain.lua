@@ -11,35 +11,17 @@ function Terrain:init(params)
 
     self.entities = {} -- rockets, people, others?
 
-    self.rocket = Rocket({
-        x = TILE_SIZE * 50,
-        y = math.floor(self:tileToPoint(self.gridYs[50]) - 10),
-        width = ENTITY_DEFS['rocket-1'].width,
-        height = ENTITY_DEFS['rocket-1'].height,
-        speed = ENTITY_DEFS['rocket-1'].speed,
-        texture = ENTITY_DEFS['rocket-1'].texture,
-        animations = ENTITY_DEFS['rocket-1'].animations,
-    })
-
-    self.rocket.stateMachine = StateMachine({
-        ['idle'] = function() return RocketIdleState(self.rocket) end,
-        ['flying'] = function() return RocketFlyingState(self.rocket) end,
-    })
-    self.rocket:changeState('idle')
-
     self.dx = TERRAIN_SCROLL_SPEED
 end
 
 function Terrain:update(dt)
     self.leadingX = self.leadingX - self.dx * dt
-    self.rocket:update(dt)
 
     -- Make sure we're removing terrain
     assert(#self.gridYs < self.width + 10, 'Failed to remove unneeded terrain')
 end
 
 function Terrain:render()
-    self.rocket:render()
     love.graphics.setColor({ 0, 255, 0, 255 })
 
     for i = 1, #self.gridYs do
