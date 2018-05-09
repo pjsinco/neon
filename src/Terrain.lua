@@ -1,13 +1,14 @@
 Terrain = Class({})
 
-function Terrain:init(params)
+function Terrain:init()
     self.width = math.floor(VIRTUAL_WIDTH / TILE_SIZE)
-    self.maxHeight = math.floor(VIRTUAL_HEIGHT / TILE_SIZE)
+    self.maxHeight = 3 -- default
+    self.minHeight = 1 -- default
     self.category = 'terrain' -- identifier for event handling
     self.gridX = 0 -- starting x position for terrain
 
     -- table of y values, dilineating top of terrain
-    self.gridYs = self:generateGridYs(self.width + 1) 
+    self.gridYs = self:createGridYs(self.width + 1) 
     
     self.leadingX = 0
 
@@ -28,10 +29,10 @@ function Terrain:render()
 
     for i = 1, #self.gridYs do
         local x = (self.leadingX) + (TILE_SIZE * i)
-
+        local y = VIRTUAL_HEIGHT - (self.gridYs[i] * TILE_SIZE)
         love.graphics.rectangle('line',
                                 math.floor(x),
-                                math.floor(VIRTUAL_HEIGHT - (self.gridYs[i] * TILE_SIZE)),
+                                math.floor(y),
                                 TILE_SIZE,
                                 TILE_SIZE)
 
@@ -51,13 +52,12 @@ function Terrain:render()
                                     math.floor(self:tileToPoint(y)),
                                     TILE_SIZE,
                                     TILE_SIZE)
-
         end
     end
 
     if self.leadingX < (0 - TILE_SIZE * 2) then
         -- based on the final y
-        local newY = self:generateY(self.gridYs[#self.gridYs]) 
+        local newY = self:createY(self.gridYs[#self.gridYs]) 
 
         table.remove(self.gridYs, 1)
         table.insert(self.gridYs, #self.gridYs + 1, newY)
@@ -72,19 +72,17 @@ function Terrain:render()
     -- love.graphics.rectangle('line', self.swordHurtbox.x, self.swordHurtbox.y,
     --     self.swordHurtbox.width, self.swordHurtbox.height)
     -- love.graphics.setColor(255, 255, 255, 255)
-
-
 end
 
 --[[
    Generate a list of numbers, with each no more than 1 greater or less than 
    its neighbor.
 ]]
-function Terrain:generateGridYs(count)
+function Terrain:createGridYs(count)
     local currentY = math.random(1, 5)
     local ys = {}
     for i = 1, count do
-        currentY = self:generateY(currentY)
+        currentY = self:createY(currentY)
         table.insert(ys, currentY)
     end
     return ys
@@ -93,10 +91,21 @@ end
 --[[
     Generate a new Y value, the same or one off from the passed-in value
 ]]
-function Terrain:generateY(yBase)
+function Terrain:createY(yBase)
     local nextY = math.random(2) - 1
-    local add = math.random(2) -- whether to add or subtract
-    if (add % 2 == 0) then
+    local maybeAdd = math.random(2)
+    local doAdd = true
+
+    -- whether to add or subtract
+    if yBase >= self.maxHeight then
+        doAdd = false
+    elseif yBase <= self.minHeight then
+        doAdd = true
+    else
+        doAdd = maybeAdd == 1
+    end
+
+    if (doAdd) then
       yBase = yBase + nextY
     else
       if yBase > 1 then -- make sure y is always above 0
