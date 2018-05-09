@@ -8,6 +8,7 @@ function Wave:init(player, defs, terrain)
     self.duration = defs.duration
     self.speedMultiplier = defs.speedMultiplier
 
+    --self.rockets = self:createRockets(defs.rocketCount)
     self.rockets = {}
 
     local rocket = Rocket({
@@ -53,6 +54,7 @@ function Wave:update(dt)
     for _, rocket in pairs(self.rockets) do
         if self.player.inPlay and rocket:collides(self.player) then
             Event.dispatch('player-collided', self.player, rocket)
+            rocket.active = false
         end
 
         rocket:update(dt)
@@ -64,8 +66,9 @@ function Wave:update(dt)
         end
     
         for _, projectile in pairs(self.player.projectiles) do
-            if alien.active and projectile:collides(alien) then
+            if not alien.hit and projectile:collides(alien) then
                 Event.dispatch('alien-collided', alien, projectile)
+                projectile.active = false
             end
         end
 
@@ -105,3 +108,5 @@ function Wave:spawnAlien(params)
     
     return alien
 end
+
+

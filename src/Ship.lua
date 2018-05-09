@@ -53,7 +53,9 @@ end
 
 function Ship:render()
     for _, projectile in pairs(self.projectiles) do
-        projectile:render(dt)
+        if projectile.active then
+            projectile:render(dt)
+        end
     end
 
     Entity.render(self)
