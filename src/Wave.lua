@@ -57,7 +57,7 @@ function Wave:update(dt)
     end
 
     for _, alien in pairs(self.aliens) do
-        if alien.active and self.player.inPlay and self.player:collides(alien) then
+        if not alien.hit and self.player.inPlay and self.player:collides(alien) then
             Event.dispatch('player-collided', self.player, alien)
         end
     
