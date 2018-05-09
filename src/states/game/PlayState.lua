@@ -24,7 +24,7 @@ function PlayState:init(params)
     self.player.lives = nil
 
     Event.on('wave-completed', function(waveIndex)
-print('heardwavecompleted')
+        print('heardwavecompleted')
         self.waveCount = self.waveCount + 1
         self.wave = Wave(self.player,
                          WAVE_DEFS['zigzag-2'],
