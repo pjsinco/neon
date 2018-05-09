@@ -5,7 +5,9 @@ function Terrain:init(params)
     self.maxHeight = math.floor(VIRTUAL_HEIGHT / TILE_SIZE)
     self.category = 'terrain' -- identifier for event handling
     self.gridX = 0 -- starting x position for terrain
-    self.gridYs = self:generateGridYs(self.width + 1) -- table of y values
+
+    -- table of y values, dilineating top of terrain
+    self.gridYs = self:generateGridYs(self.width + 1) 
     
     self.leadingX = 0
 
@@ -22,16 +24,35 @@ function Terrain:update(dt)
 end
 
 function Terrain:render()
-    love.graphics.setColor({ 0, 255, 0, 255 })
+    love.graphics.setColor({ 127, 255, 0, 255 })
 
     for i = 1, #self.gridYs do
         local x = (self.leadingX) + (TILE_SIZE * i)
 
         love.graphics.rectangle('line',
-                                x,
-                                VIRTUAL_HEIGHT - (self.gridYs[i] * TILE_SIZE),
+                                math.floor(x),
+                                math.floor(VIRTUAL_HEIGHT - (self.gridYs[i] * TILE_SIZE)),
                                 TILE_SIZE,
                                 TILE_SIZE)
+
+        
+        -- draw underneath top tiles
+        for y = self.gridYs[i], 1, -1 do
+            love.graphics.setColor({ 255, 0, 255, 255 })
+            love.graphics.rectangle('fill',
+                                    math.floor(x),
+                                    math.floor(self:tileToPoint(y)),
+                                    TILE_SIZE,
+                                    TILE_SIZE)
+
+            love.graphics.setColor({ 127, 255, 0, 127 })
+            love.graphics.rectangle('line',
+                                    math.floor(x),
+                                    math.floor(self:tileToPoint(y)),
+                                    TILE_SIZE,
+                                    TILE_SIZE)
+
+        end
     end
 
     if self.leadingX < (0 - TILE_SIZE * 2) then
@@ -126,7 +147,7 @@ function Terrain:generateColumn(len, x)
         table.insert(col, TerrainTile({ 
             x = x,
             y = yPos,
-            color = { 0, 255, 0, 255 }
+            color = { 127, 255, 0, 255 }
         }))
     end
 
