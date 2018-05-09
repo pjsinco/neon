@@ -1,8 +1,8 @@
 Wave = Class({})
 
-function Wave:init(player, defs)
+function Wave:init(player, defs, terrain)
     self.player = player
-    self.terrain = Terrain()
+    self.terrain = terrain
     self.aliens = {}
     self.alienCount = defs.alienCount
     self.duration = defs.duration

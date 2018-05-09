@@ -16,7 +16,9 @@ function PlayState:init(params)
     self.waveCount = 1
     --self.level = 1
 
-    self.wave = Wave(self.player, WAVE_DEFS['zigzag'])
+    self.terrain = Terrain()
+
+    self.wave = Wave(self.player, WAVE_DEFS['zigzag'], self.terrain)
 
     self.score = nil 
     self.player.lives = nil
@@ -25,7 +27,7 @@ function PlayState:init(params)
 print('heardwavecompleted')
         self.waveCount = self.waveCount + 1
         --TODO Launch next wave
-        self.wave = Wave(self.player, WAVE_DEFS['zigzag-2'])
+        self.wave = Wave(self.player, WAVE_DEFS['zigzag-2'], self.terrain)
     end)
 
     Event.on('scored', function(amount)
