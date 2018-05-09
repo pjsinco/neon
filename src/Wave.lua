@@ -1,6 +1,6 @@
 Wave = Class({})
 
-function Wave:init(player, defs, terrain)
+function Wave:init(player, defs, terrain, rockets)
     self.player = player
     self.terrain = terrain
     self.aliens = {}
@@ -9,7 +9,7 @@ function Wave:init(player, defs, terrain)
     self.speedMultiplier = defs.speedMultiplier
 
     --self.rockets = self:createRockets(defs.rocketCount)
-    self.rockets = {}
+    self.rockets = rockets or {}
 
     for i = 1, self.alienCount do
         local alien = self:spawnAlien({

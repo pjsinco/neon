@@ -26,8 +26,10 @@ function PlayState:init(params)
     Event.on('wave-completed', function(waveIndex)
 print('heardwavecompleted')
         self.waveCount = self.waveCount + 1
-        --TODO Launch next wave
-        self.wave = Wave(self.player, WAVE_DEFS['zigzag-2'], self.terrain)
+        self.wave = Wave(self.player,
+                         WAVE_DEFS['zigzag-2'],
+                         self.terrain,
+                         self.wave.rockets)
     end)
 
     Event.on('scored', function(amount)
