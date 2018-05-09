@@ -3,6 +3,8 @@ Wave = Class({})
 function Wave:init(player, defs, terrain, rockets)
     self.player = player
     self.terrain = terrain
+    self.terrain.maxHeight = defs.terrainMaxHeight
+    self.terrain.minHeight = defs.terrainMinHeight
     self.aliens = {}
     self.alienCount = defs.alienCount
     self.duration = defs.duration
