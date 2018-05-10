@@ -39,7 +39,7 @@ Event = require 'lib/knife/event'
 Chain = require 'lib/knife/chain'
 
 gTextures = {
-    ['ship'] = love.graphics.newImage('graphics/spaceships-2.png'),
+    ['ship'] = love.graphics.newImage('graphics/spaceships-3.png'),
     ['space'] = love.graphics.newImage('graphics/space-1.png'),
     ['afterburners'] = love.graphics.newImage('graphics/afterburners-1.png'),
     ['alien-ship-1'] = love.graphics.newImage('graphics/alien-ship-1.png'),
@@ -49,6 +49,7 @@ gTextures = {
     ['projectile-1'] = love.graphics.newImage('graphics/projectiles.png'),
     ['explosion'] = love.graphics.newImage('graphics/explosions.png'),
     ['rocket'] = love.graphics.newImage('graphics/rockets-1.png'),
+    ['particle'] = love.graphics.newImage('graphics/particle.png'),
 }
 
 gFrames = {
