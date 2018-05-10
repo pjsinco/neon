@@ -12,7 +12,13 @@ function Wave:init(player, defs, terrain, rockets)
 
     -- where we can expect there to be no terrain
     self.liveArea = VIRTUAL_HEIGHT - (self.terrain.maxHeight * TILE_SIZE)
-print(self.liveArea)
+
+    local globeY = math.random(1, self.liveArea - 
+        ENTITY_DEFS['fuel-1'].height)
+    local globeX = VIRTUAL_WIDTH + ENTITY_DEFS['fuel-1'].width
+    self.globe = Powerup(ENTITY_DEFS['fuel-1'], globeX, globeY)
+    self.globe:changeAnimation('base')
+
 
     --self.rockets = self:createRockets(defs.rocketCount)
     self.rockets = rockets or {}
@@ -41,6 +47,7 @@ function Wave:update(dt)
     Timer.update(dt)
     self.terrain:update(dt)
     self.player:update(dt)
+    self.globe:update(dt)
 
 
     if self.player.inPlay and self.player:collidesWithTerrain(self.terrain) then
@@ -77,6 +84,7 @@ end
 function Wave:render()
     self.terrain:render()
     self.player:render()
+    self.globe:render()
 
     for _, rocket in pairs(self.rockets) do
         rocket:render()

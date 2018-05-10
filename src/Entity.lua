@@ -4,6 +4,8 @@ function Entity:init(params)
     self.stateMachine = params.stateMachine or nil
     self.x = params.x
     self.y = params.y
+    self.width = params.width
+    self.height = params.height
     self.animations = self:createAnimations(params.animations)
     self.dx = params.speed
     self.dy = params.speed

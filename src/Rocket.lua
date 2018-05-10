@@ -3,8 +3,6 @@ Rocket = Class({ __includes = Entity })
 function Rocket:init(params)
     Entity.init(self, params)
     self:changeAnimation('idle')
-    self.width = params.width
-    self.height = params.height
 end
 
 function Rocket:update(dt)

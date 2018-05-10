@@ -64,10 +64,12 @@ function Ship:render()
                                    math.random(2) == 1,
                                    math.random(2) == 1,
                                    true)
-        Entity.render(self)
+    end
+
+    Entity.render(self)
+
+    if self.invulnerable then
         love.graphics.setColorMask(true, true, true, true)
-    else
-        Entity.render(self)
     end
 end
 
