@@ -11,6 +11,8 @@ function Entity:init(params)
     self.dy = params.speed
     self.active = true
     self.hit = false
+    self.category = params.category
+    self.duration = params.duration or 5
 end
 
 function Entity:update(dt)

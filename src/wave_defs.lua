@@ -8,8 +8,10 @@ WAVE_DEFS = {
         terrainMaxHeight = 3,
         maybeSpawnRocketSeconds = 2,
         maybeSpawnRocketChance = 2,
-        maybeSpawnPowerupSeconds = 5, -- every n seconds
-        maybeSpawnPowerupChance = 15, -- 1 in n
+        --maybeSpawnPowerupSeconds = math.random(5, 10), -- every n seconds
+        maybeSpawnPowerupSeconds = 2, -- every n seconds
+        maybeSpawnPowerupChance = 2, -- 1 in n
+        powerupDuration = 5,
         powerups = { 'fuel-1' },
     },
     ['zigzag-2'] = {
@@ -21,8 +23,10 @@ WAVE_DEFS = {
         terrainMaxHeight = 8,
         maybeSpawnRocketSeconds = 1,
         maybeSpawnRocketChance = 2,
-        maybeSpawnPowerupSeconds = 3, -- every n seconds
-        maybeSpawnPowerupChance = 15, -- 1 in n
+        --maybeSpawnPowerupSeconds = math.random(5, 10), -- every n seconds
+        maybeSpawnPowerupSeconds = 2, -- every n seconds
+        maybeSpawnPowerupChance = 5, -- 1 in n
+        powerupDuration = 5,
         powerups = { 'fuel-1', 'globe-1' },
     }
 }

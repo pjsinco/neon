@@ -1,16 +1,17 @@
 Wave = Class({})
 
-function Wave:init(player, defs, terrain, rockets, powerups)
+function Wave:init(player, defs, terrain, rockets, powerup)
     self.player = player
     self.terrain = terrain
     self.terrain.maxHeight = defs.terrainMaxHeight
     self.terrain.minHeight = defs.terrainMinHeight
     self.aliens = {}
-    self.powerups = powerups or {}
+    self.powerup = powerup 
     self.rockets = rockets or {}
     self.alienCount = defs.alienCount
     self.duration = defs.duration
     self.speedMultiplier = defs.speedMultiplier
+    self.powerupDuration = defs.powerupDuration
 
     -- where we can expect there to be no terrain
     self.liveArea = VIRTUAL_HEIGHT - (self.terrain.maxHeight * TILE_SIZE)
@@ -18,10 +19,8 @@ function Wave:init(player, defs, terrain, rockets, powerups)
     for i = 1, self.alienCount do
         local alien = self:spawnAlien({
             x = (i % 2 == 0) and VIRTUAL_WIDTH - 18 or VIRTUAL_WIDTH - 54,
-            --y = i * ((VIRTUAL_HEIGHT - 20) / self.alienCount),
-
-            -- 34 is an estimate of the alien's vertical range, I think
             y = i * ((self.liveArea - 34)/ self.alienCount),
+            -- 34 is an estimate of the alien's vertical range, I think
         })
         table.insert(self.aliens, alien)
     end
@@ -44,6 +43,9 @@ function Wave:init(player, defs, terrain, rockets, powerups)
 end
 
 function Wave:update(dt)
+    self:cleanupEntities(self.aliens)
+    self:cleanupEntities(self.rockets)
+
     Timer.update(dt)
     self.terrain:update(dt)
     self.player:update(dt)
@@ -76,17 +78,15 @@ function Wave:update(dt)
         alien:update(dt)
     end
 
-    for _, powerup in pairs(self.powerups) do
-        if not powerup.hit and 
-           self.player.inPlay and 
-           self.player:collides(powerup) then
-                Event.dispatch('powerup-consumed', powerup)
+    
+    if self.powerup ~= nil then
+        self.powerup:update(dt)
+        if not self.powerup.hit and 
+               self.player.inPlay and 
+               self.player:collides(self.powerup) then
+            Event.dispatch('powerup-consumed', self.powerup)
         end
-
-        powerup:update(dt)
     end
-
-    --TODO reverse iterate over aliens and remove inactive ones
 end
 
 function Wave:render()
@@ -101,8 +101,8 @@ function Wave:render()
         alien:render()
     end
 
-    for _, powerup in pairs(self.powerups) do
-        powerup:render()
+    if self.powerup ~= nil then
+        self.powerup:render()
     end
 end
 
@@ -113,6 +113,7 @@ function Wave:spawnAlien(params)
         animations = ENTITY_DEFS['alien-1'].animations,
         speed = ENTITY_DEFS['alien-1'].speed * self.speedMultiplier,
         value = ENTITY_DEFS['alien-1'].value,
+        category = ENTITY_DEFS['alien-1'].category,
     })
 
     alien.stateMachine = StateMachine({
@@ -134,23 +135,43 @@ function Wave:maybeSpawnRocket(terrainIndex, rocketDef, chance)
             speed      = rocketDef.speed,
             texture    = rocketDef.texture,
             animations = rocketDef.animations,
+            category = rocketDef.category,
         })
         rocket.stateMachine = StateMachine({
             ['idle'] = function() return RocketIdleState(rocket) end,
             ['flying'] = function() return RocketFlyingState(rocket) end,
         })
         rocket:changeState('idle')
-print_r('x: ' .. rocket.x .. ', y: ' .. rocket.y)
         table.insert(self.rockets, rocket)
     end
 end
 
 function Wave:maybeSpawnPowerup(chance, def)
-    local y = math.random(1, self.liveArea - def.height)
-    local x = VIRTUAL_WIDTH + def.width
-    local powerup = Powerup(ENTITY_DEFS['fuel-1'], x, y)
-    powerup:changeAnimation('base')
-
-    table.insert(self.powerups, powerup)
+    if (math.random(chance) == 1) then
+        local y = math.random(1, self.liveArea - def.height)
+        local x = math.random(1, VIRTUAL_WIDTH - def.width)
+        self.powerup = Powerup(def, x, y)
+        self.powerup:changeAnimation('base')
+        Timer.tween(1, {
+            [self.powerup] = { transitionAlpha = 255 }
+        }):finish(function() 
+            Timer.after(self.powerupDuration, function() 
+                Timer.tween(1, {
+                    [self.powerup] = { transitionAlpha = 0 }
+                }):finish(function()
+                    self.powerup.remove = true
+                end)
+            end)
+        end)
+    end
 end
 
+function Wave:cleanupEntities(entityTable)
+    for i = #entityTable, 1, -1 do
+        -- Remove entity when it scrolls offscreen
+        if entityTable[i].x <= 0 or
+           entityTable[i].remove then
+            table.remove(entityTable, i)
+        end
+    end
+end

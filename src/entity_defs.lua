@@ -97,7 +97,7 @@ ENTITY_DEFS = {
         }
     },
     ['globe-1'] = {
-        speed = -SCROLL_SPEED,
+        speed = 0,
         width = 28,
         height = 28,
         category = 'powerup',
@@ -111,7 +111,7 @@ ENTITY_DEFS = {
         }
     },
     ['fuel-1'] = {
-        speed = -SCROLL_SPEED,
+        speed = 0,
         width = 40,
         height = 20,
         category = 'powerup',

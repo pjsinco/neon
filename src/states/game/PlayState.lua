@@ -24,13 +24,20 @@ function PlayState:init(params)
     self.player.lives = nil
 
     Event.on('wave-completed', function(waveIndex)
+        -- flag powerups, rockets for removal
+        --for _, powerup in pairs(self.wave.powerups) do
+            --powerup.remove = true
+        --end
+        --for _, rocket in pairs(self.wave.rockets) do
+            --rocket.remove = true
+        --end
         print('heardwavecompleted')
         self.waveCount = self.waveCount + 1
         self.wave = Wave(self.player,
                          WAVE_DEFS['zigzag-2'],
                          self.terrain,
                          self.wave.rockets,
-                         self.wave.powerups)
+                         self.wave.powerup)
     end)
 
     Event.on('scored', function(amount)
