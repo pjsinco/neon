@@ -22,8 +22,8 @@ print(self.liveArea)
             x = (i % 2 == 0) and VIRTUAL_WIDTH - 18 or VIRTUAL_WIDTH - 54,
             --y = i * ((VIRTUAL_HEIGHT - 20) / self.alienCount),
 
-            -- 30 is an estimate of the alien's vertical range, I think
-            y = i * ((self.liveArea - 30)/ self.alienCount),
+            -- 34 is an estimate of the alien's vertical range, I think
+            y = i * ((self.liveArea - 34)/ self.alienCount),
         })
         table.insert(self.aliens, alien)
     end

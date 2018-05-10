@@ -36,7 +36,7 @@ function Ship:update(dt)
         gSounds['laser-1']:stop()
         gSounds['laser-1']:play()
         table.insert(self.projectiles, Projectile({
-            x = self.x + self.width,
+            x = self.x + self.width - 8,
             y = self.y + (self.height / 2),
             width = ENTITY_DEFS['projectile-1'].width,
             height = ENTITY_DEFS['projectile-1'].height,
