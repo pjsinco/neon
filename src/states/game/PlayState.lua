@@ -29,7 +29,8 @@ function PlayState:init(params)
         self.wave = Wave(self.player,
                          WAVE_DEFS['zigzag-2'],
                          self.terrain,
-                         self.wave.rockets)
+                         self.wave.rockets,
+                         self.wave.powerups)
     end)
 
     Event.on('scored', function(amount)

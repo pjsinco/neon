@@ -1,27 +1,19 @@
 Wave = Class({})
 
-function Wave:init(player, defs, terrain, rockets)
+function Wave:init(player, defs, terrain, rockets, powerups)
     self.player = player
     self.terrain = terrain
     self.terrain.maxHeight = defs.terrainMaxHeight
     self.terrain.minHeight = defs.terrainMinHeight
     self.aliens = {}
+    self.powerups = powerups or {}
+    self.rockets = rockets or {}
     self.alienCount = defs.alienCount
     self.duration = defs.duration
     self.speedMultiplier = defs.speedMultiplier
 
     -- where we can expect there to be no terrain
     self.liveArea = VIRTUAL_HEIGHT - (self.terrain.maxHeight * TILE_SIZE)
-
-    local globeY = math.random(1, self.liveArea - 
-        ENTITY_DEFS['fuel-1'].height)
-    local globeX = VIRTUAL_WIDTH + ENTITY_DEFS['fuel-1'].width
-    self.globe = Powerup(ENTITY_DEFS['fuel-1'], globeX, globeY)
-    self.globe:changeAnimation('base')
-
-
-    --self.rockets = self:createRockets(defs.rocketCount)
-    self.rockets = rockets or {}
 
     for i = 1, self.alienCount do
         local alien = self:spawnAlien({
@@ -38,8 +30,16 @@ function Wave:init(player, defs, terrain, rockets)
         Event.dispatch('wave-completed')
     end)
 
-    Timer.every(1, function()
-        self:maybeSpawnRocket(#self.terrain.gridYs - 1, ENTITY_DEFS['rocket-1']) 
+    Timer.every(defs.maybeSpawnRocketSeconds, function()
+        self:maybeSpawnRocket(#self.terrain.gridYs - 1,
+                              ENTITY_DEFS['rocket-1'],
+                              defs.maybeSpawnRocketChance) 
+    end)
+
+    Timer.every(defs.maybeSpawnPowerupSeconds, function()
+        local powerupName = defs.powerups[math.random(#defs.powerups)]
+        self:maybeSpawnPowerup(defs.maybeSpawnPowerupChance,
+                               ENTITY_DEFS[powerupName])
     end)
 end
 
@@ -47,8 +47,6 @@ function Wave:update(dt)
     Timer.update(dt)
     self.terrain:update(dt)
     self.player:update(dt)
-    self.globe:update(dt)
-
 
     if self.player.inPlay and self.player:collidesWithTerrain(self.terrain) then
         Event.dispatch('player-collided', self.player, self.terrain)
@@ -78,13 +76,22 @@ function Wave:update(dt)
         alien:update(dt)
     end
 
+    for _, powerup in pairs(self.powerups) do
+        if not powerup.hit and 
+           self.player.inPlay and 
+           self.player:collides(powerup) then
+                Event.dispatch('powerup-consumed', powerup)
+        end
+
+        powerup:update(dt)
+    end
+
     --TODO reverse iterate over aliens and remove inactive ones
 end
 
 function Wave:render()
     self.terrain:render()
     self.player:render()
-    self.globe:render()
 
     for _, rocket in pairs(self.rockets) do
         rocket:render()
@@ -92,6 +99,10 @@ function Wave:render()
 
     for _, alien in pairs(self.aliens) do
         alien:render()
+    end
+
+    for _, powerup in pairs(self.powerups) do
+        powerup:render()
     end
 end
 
@@ -113,7 +124,7 @@ function Wave:spawnAlien(params)
     return alien
 end
 
-function Wave:maybeSpawnRocket(terrainIndex, rocketDef)
+function Wave:maybeSpawnRocket(terrainIndex, rocketDef, chance)
     if (math.random(2) == 1) then
         local rocket = Rocket({
             x = TILE_SIZE * terrainIndex,
@@ -132,5 +143,14 @@ function Wave:maybeSpawnRocket(terrainIndex, rocketDef)
 print_r('x: ' .. rocket.x .. ', y: ' .. rocket.y)
         table.insert(self.rockets, rocket)
     end
+end
+
+function Wave:maybeSpawnPowerup(chance, def)
+    local y = math.random(1, self.liveArea - def.height)
+    local x = VIRTUAL_WIDTH + def.width
+    local powerup = Powerup(ENTITY_DEFS['fuel-1'], x, y)
+    powerup:changeAnimation('base')
+
+    table.insert(self.powerups, powerup)
 end
 

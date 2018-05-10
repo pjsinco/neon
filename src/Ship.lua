@@ -28,6 +28,10 @@ function Ship:init(params)
             end
         )()
     end)
+
+    Event.on('powerup-consumed', function(powerup)
+print('powerupconsumed')
+    end)
 end
 
 function Ship:update(dt)
