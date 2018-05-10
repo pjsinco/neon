@@ -1,6 +1,8 @@
 ENTITY_DEFS = {
     ['player'] = {
         speed = SHIP_SPEED,
+        width = 21,
+        height = 34,
         category = 'player',
         animations = {
             ['idle'] = {
@@ -32,6 +34,8 @@ ENTITY_DEFS = {
     },
     ['alien-1'] = {
         speed = SCROLL_SPEED,
+        width = 26,
+        height = 22,
         category = 'alien',
         value = 100,
         animations = {
@@ -61,8 +65,8 @@ ENTITY_DEFS = {
     ['projectile-1'] = {
         speed = SHIP_PROJECTILE_SPEED,
         width = 6,
-        category = 'projectile',
         height = 3,
+        category = 'projectile',
         animations = {
             ['glowing'] = {
                 frames = { 1, 2 },
@@ -75,8 +79,8 @@ ENTITY_DEFS = {
     ['rocket-1'] = {
         speed = -120,
         width = 9,
-        category = 'projectile',
         height = 17,
+        category = 'projectile',
         animations = {
             ['idle'] = {
                 frames = { 1 },
@@ -88,6 +92,20 @@ ENTITY_DEFS = {
                 frames = { 2, 3 },
                 interval = 0.15,
                 texture = 'rocket',
+                looping = true,
+            },
+        }
+    },
+    ['globe-1'] = {
+        speed = -SCROLL_SPEED,
+        width = 28,
+        height = 28,
+        category = 'powerup',
+        animations = {
+            ['spinning'] = {
+                frames = { 1, 2, 3, 2, },
+                interval = 0.1,
+                texture = 'globe',
                 looping = true,
             },
         }

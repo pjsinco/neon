@@ -64,6 +64,7 @@ function Ship:render()
                                    math.random(2) == 1,
                                    math.random(2) == 1,
                                    true)
+
         Entity.render(self)
         love.graphics.setColorMask(true, true, true, true)
     else
