@@ -14,10 +14,10 @@ function Wave:init(player, defs, terrain, rockets)
     self.liveArea = VIRTUAL_HEIGHT - (self.terrain.maxHeight * TILE_SIZE)
 
     local globeY = math.random(1, self.liveArea - 
-        ENTITY_DEFS['globe-1'].height)
-    local globeX = VIRTUAL_WIDTH + ENTITY_DEFS['globe-1'].width
-    self.globe = Powerup(ENTITY_DEFS['globe-1'], globeX, globeY)
-    self.globe:changeAnimation('spinning')
+        ENTITY_DEFS['fuel-1'].height)
+    local globeX = VIRTUAL_WIDTH + ENTITY_DEFS['fuel-1'].width
+    self.globe = Powerup(ENTITY_DEFS['fuel-1'], globeX, globeY)
+    self.globe:changeAnimation('base')
 
 
     --self.rockets = self:createRockets(defs.rocketCount)

@@ -52,6 +52,7 @@ gTextures = {
     ['rocket'] = love.graphics.newImage('graphics/rockets-1.png'),
     ['particle'] = love.graphics.newImage('graphics/particle.png'),
     ['globe'] = love.graphics.newImage('graphics/globes.png'),
+    ['fuel'] = love.graphics.newImage('graphics/fuel-tank.png'),
 }
 
 gFrames = {
@@ -66,6 +67,7 @@ gFrames = {
     ['explosion'] = GenerateQuads(gTextures['explosion'], 16, 16),
     ['rocket'] = GenerateQuads(gTextures['rocket'], 9, 17),
     ['globe'] = GenerateQuads(gTextures['globe'], 28, 28),
+    ['fuel'] = GenerateQuads(gTextures['fuel'], 40, 20),
 }
 
 gFonts = {

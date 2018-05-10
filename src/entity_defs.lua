@@ -109,5 +109,19 @@ ENTITY_DEFS = {
                 looping = true,
             },
         }
+    },
+    ['fuel-1'] = {
+        speed = -SCROLL_SPEED,
+        width = 40,
+        height = 20,
+        category = 'powerup',
+        animations = {
+            ['base'] = {
+                frames = { 1, 2 },
+                interval = 0.15,
+                texture = 'fuel',
+                looping = true,
+            },
+        }
     }
 }
