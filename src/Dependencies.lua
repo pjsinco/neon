@@ -41,18 +41,18 @@ Chain = require 'lib/knife/chain'
 
 gTextures = {
     ['ship'] = love.graphics.newImage('graphics/spaceships-3.png'),
-    ['space'] = love.graphics.newImage('graphics/space-1.png'),
+    ['space'] = love.graphics.newImage('graphics/space-indexed.png'),
     ['afterburners'] = love.graphics.newImage('graphics/afterburners-1.png'),
     ['alien-ship-1'] = love.graphics.newImage('graphics/alien-ship-1.png'),
-    ['alien-ship-gray'] = love.graphics.newImage('graphics/ship-small-gray.png'),
+    ['alien-ship-gray'] = love.graphics.newImage('graphics/ship-small-gray-3.png'),
     ['alien-ship-green'] = 
         love.graphics.newImage('graphics/alien-ships-green-1.png'),
     ['projectile-1'] = love.graphics.newImage('graphics/projectiles.png'),
-    ['explosion'] = love.graphics.newImage('graphics/explosions.png'),
+    ['explosion'] = love.graphics.newImage('graphics/explosions-indexed.png'),
     ['rocket'] = love.graphics.newImage('graphics/rockets-1.png'),
     ['particle'] = love.graphics.newImage('graphics/particle.png'),
     ['globe'] = love.graphics.newImage('graphics/globes.png'),
-    ['fuel'] = love.graphics.newImage('graphics/fuel-tank.png'),
+    ['fuel'] = love.graphics.newImage('graphics/fuel-tank-indexed.png'),
 }
 
 gFrames = {
