@@ -3,6 +3,8 @@ PlayState = Class({ __includes = BaseState })
 function PlayState:init(params)
     self.timers = {}
 
+    self.glitching = false
+
     Timer.after(0.5, function() 
         gSounds['theme']:setLooping(true)
         gSounds['theme']:play()
@@ -31,6 +33,24 @@ function PlayState:init(params)
     self.player.lives = nil
     self.paused = false
 
+    Event.on('fuel-is-low', function()
+        self.glitching = true  
+        gSounds['theme']:pause()
+        gSounds['sfx-17']:setLooping(true)
+        gSounds['sfx-17']:play()
+        self.gameMessage = 
+            GameMessage('Fuel is low', 'warning', function() end)
+    end)
+
+    Event.on('fuel-restored', function() 
+        if self.glitching then
+            self.glitching = false
+            gSounds['sfx-17']:stop()
+            gSounds['theme']:resume()
+            self.gameMessage = nil
+        end
+    end)
+
     Event.on('wave-completed', function(waveIndex)
         print('heardwavecompleted')
         print(self.wave:getAlienCount())
@@ -53,7 +73,7 @@ function PlayState:init(params)
             end,
             function(go)
                 self.paused = true
-                self.gameMessage = GameMessage('Player 1', go)
+                self.gameMessage = GameMessage('Player 1', 'info', go)
             end,
             function(go)
                 self.paused = false
@@ -89,6 +109,13 @@ function PlayState:update(dt)
 end
 
 function PlayState:render()
+    if (self.glitching) then
+        love.graphics.setColorMask(math.random(2) == 1,
+                                   math.random(2) == 1,
+                                   math.random(2) == 1,
+                                   true)
+    end
+
     love.graphics.setFont(gFonts['image'])
 
     -- show score

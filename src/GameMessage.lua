@@ -3,16 +3,19 @@ GameMessage = Class({})
 --[[
    Flash a message to the player
 ]]
-function GameMessage:init(message, callback)
+function GameMessage:init(message, level, callback)
+    self.levels = { 'info', 'warning' }
     self.message = message
-    self.mask = false
+    self.masking = false
+    self.level = level or 'info'
+    self.callback = callback or function() end
 
     self.timers = {}
     
     Timer.every(0.5, function()
-        self.mask = not self.mask
+        self.masking = not self.masking
     end):group(self.timers):limit(6):finish(function() 
-        callback()
+        self.callback()
     end)
 end
 
@@ -22,9 +25,15 @@ end
 
 function GameMessage:render()
     love.graphics.setFont(gFonts['image'])
-    love.graphics.setColor({ 255, 255, 255, 255 })
 
-    if self.mask then
+    if self.level == 'warning' then
+        love.graphics.setColor(gColors['red'])
+    else
+        love.graphics.setColor(gColors['white'])
+    end
+     
+
+    if self.masking then
         love.graphics.setColorMask(false, false, false, false)
     end
     love.graphics.printf(self.message,

@@ -8,6 +8,8 @@ Arcade-inspired side-scrolling shoot-em-up in outer space
     * Fuel
     * Invulnerability  
 * Threats from aliens, rockets, fuel running out
+* Glitch effect when fuel is low
+* Bonus for clearing all aliens in a wave
 
 ### Source Material
 ##### Inspirations
