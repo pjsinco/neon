@@ -13,6 +13,7 @@ function Wave:init(player, defs, terrain, rockets)
     self.speedMultiplier = defs.speedMultiplier
     self.powerupDuration = defs.powerupDuration
     self.timers = {}
+    self.powerupTimers = {}
 
     -- where we can expect there to be no terrain
     self.liveArea = VIRTUAL_HEIGHT - 
@@ -51,6 +52,7 @@ end
 
 function Wave:update(dt)
     Timer.update(dt, self.timers)
+    Timer.update(dt, self.powerupTimers)
 
     self:cleanupEntities(self.rockets)
 
@@ -89,6 +91,7 @@ function Wave:update(dt)
     if self.powerup ~= nil then
         if self.powerup.remove then
             self.powerup = nil
+            Timer.clear(self.powerupTimers)
         else
             self.powerup:update(dt)
             if not self.powerup.hit and 
@@ -169,14 +172,14 @@ function Wave:maybeSpawnPowerup(chance, def)
         gSounds['powerup-appears']:play()
         Timer.tween(1, {
             [self.powerup] = { transitionAlpha = 255 }
-        }):group(self.timers):finish(function() 
+        }):group(self.powerupTimers):finish(function() 
             Timer.after(self.powerupDuration, function() 
                 Timer.tween(1, {
                     [self.powerup] = { transitionAlpha = 0 }
-                }):group(self.timers):finish(function()
+                }):group(self.powerupTimers):finish(function()
                     self.powerup.remove = true
                 end)
-            end):group(self.timers)
+            end):group(self.powerupTimers)
         end)
     end
 end
