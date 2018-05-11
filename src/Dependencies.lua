@@ -40,18 +40,18 @@ Event = require 'lib/knife/event'
 Chain = require 'lib/knife/chain'
 
 gTextures = {
-    ['ship'] = love.graphics.newImage('graphics/spaceships-3.png'),
+    ['ship'] = love.graphics.newImage('graphics/spaceships-indexed.png'),
     ['space'] = love.graphics.newImage('graphics/space-indexed.png'),
     ['afterburners'] = love.graphics.newImage('graphics/afterburners-1.png'),
     ['alien-ship-1'] = love.graphics.newImage('graphics/alien-ship-1.png'),
     ['alien-ship-gray'] = love.graphics.newImage('graphics/ship-small-gray-3.png'),
     ['alien-ship-green'] = 
         love.graphics.newImage('graphics/alien-ships-green-1.png'),
-    ['projectile-1'] = love.graphics.newImage('graphics/projectiles.png'),
+    ['projectile-1'] = love.graphics.newImage('graphics/projectiles-indexed.png'),
     ['explosion'] = love.graphics.newImage('graphics/explosions-indexed.png'),
-    ['rocket'] = love.graphics.newImage('graphics/rockets-1.png'),
+    ['rocket'] = love.graphics.newImage('graphics/rockets-indexed.png'),
     ['particle'] = love.graphics.newImage('graphics/particle.png'),
-    ['globe'] = love.graphics.newImage('graphics/globes.png'),
+    ['globe'] = love.graphics.newImage('graphics/globes-indexed.png'),
     ['fuel'] = love.graphics.newImage('graphics/fuel-tank-indexed.png'),
 }
 
@@ -63,7 +63,7 @@ gFrames = {
         GenerateQuads(gTextures['alien-ship-green'], 37, 40),
     ['alien-ship-gray'] = 
         GenerateQuads(gTextures['alien-ship-gray'], 18, 20),
-    ['projectile-1'] = GenerateQuads(gTextures['projectile-1'], 6, 3),
+    ['projectile-1'] = GenerateQuads(gTextures['projectile-1'], 12, 1),
     ['explosion'] = GenerateQuads(gTextures['explosion'], 16, 16),
     ['rocket'] = GenerateQuads(gTextures['rocket'], 9, 17),
     ['globe'] = GenerateQuads(gTextures['globe'], 28, 28),
@@ -85,6 +85,22 @@ gFonts = {
 gSounds = {
     ['explosion-1'] = love.audio.newSource('sounds/Explosion13.wav', 'static'),
     ['laser-1'] = love.audio.newSource('sounds/Laser_Shoot12.wav', 'static'),
-    --['score'] = love.audio.newSource('sounds/score.wav', 'static'),
-    --['music'] = love.audio.newSource('sounds/marios_way.mp3', 'static'),
+    ['powerup'] = love.audio.newSource('sounds/Powerup38.wav', 'static'),
+    ['theme'] = love.audio.newSource('sounds/maintheme.mp3', 'static'),
+    ['theme-alt'] = love.audio.newSource('sounds/maintheme-alt-1.mp3', 'static'),
+    ['coin'] = love.audio.newSource('sounds/coin.mp3', 'static'),
+    ['game-over'] = love.audio.newSource('sounds/gameover.mp3', 'static'),
+    ['invulnerable'] = love.audio.newSource('sounds/invulnerable.mp3', 'static'),
+    ['powerup-appears'] = love.audio.newSource('sounds/powerup-appears.wav', 'static'),
+}
+
+gColors = {
+    ['green']  = { 0  , 255, 0  , 255 },
+    ['red']    = { 255, 0  , 0  , 255 },
+    ['yellow'] = { 255, 255, 0  , 255 },
+    ['blue']   = { 0  , 0  , 255, 255 },
+    ['cyan']   = { 0  , 255, 255, 255 },
+    ['pink']   = { 255, 0  , 255, 255 },
+    ['black']  = { 0  , 0  , 0  , 255 },
+    ['white']  = { 255, 255, 255, 255 },
 }

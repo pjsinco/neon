@@ -5,10 +5,13 @@ function TitleScreenState:init()
 end
 
 function TitleScreenState:update(dt)
+    Timer.update(dt)
+
     if love.keyboard.wasPressed('enter') or
        love.keyboard.wasPressed('return') then
         --TODO Revert to 'countdown'
         --gStateMachine:change('countdown')
+        gSounds['coin']:play()
         gStateMachine:change('play', { score = 0 })
     end
         

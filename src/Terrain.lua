@@ -25,34 +25,39 @@ function Terrain:update(dt)
 end
 
 function Terrain:render()
-    love.graphics.setColor({ 127, 255, 0, 255 })
 
     for i = 1, #self.gridYs do
         local x = (self.leadingX) + (TILE_SIZE * i)
         local y = VIRTUAL_HEIGHT - (self.gridYs[i] * TILE_SIZE)
-        love.graphics.rectangle('line',
-                                math.floor(x),
-                                math.floor(y),
-                                TILE_SIZE,
-                                TILE_SIZE)
 
-        
-        -- draw underneath top tiles
+        -- draw fill
         for y = self.gridYs[i], 1, -1 do
-            love.graphics.setColor({ 255, 0, 255, 255 })
+            love.graphics.setColor(gColors['pink'])
+            love.graphics.setBlendMode('add')
             love.graphics.rectangle('fill',
                                     math.floor(x),
                                     math.floor(self:tileToPoint(y)),
                                     TILE_SIZE,
                                     TILE_SIZE)
 
-            love.graphics.setColor({ 127, 255, 0, 127 })
+            love.graphics.setColor(gColors['green'])
+            love.graphics.setBlendMode('lighten', 'premultiplied')
             love.graphics.rectangle('line',
                                     math.floor(x),
                                     math.floor(self:tileToPoint(y)),
                                     TILE_SIZE,
                                     TILE_SIZE)
         end
+
+        -- draw grid
+        love.graphics.setColor(gColors['green'])
+        love.graphics.setBlendMode('lighten', 'premultiplied')
+        love.graphics.rectangle('line',
+                                math.floor(x),
+                                math.floor(y),
+                                TILE_SIZE,
+                                TILE_SIZE)
+
     end
 
     if self.leadingX < (0 - TILE_SIZE * 2) then
@@ -65,6 +70,7 @@ function Terrain:render()
     end
 
     love.graphics.setColor({ 255, 255, 255, 255 })
+    love.graphics.setBlendMode('alpha', 'alphamultiply')
 
     -- debug for player and hurtbox collision rects
     -- love.graphics.setColor(255, 0, 255, 255)
