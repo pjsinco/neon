@@ -7,7 +7,7 @@ Arcade-inspired side-scrolling shoot-em-up in outer space
 * Two powerups
     * Fuel
     * Invulnerability  
-* Threats from enemies, fuel running out
+* Threats from aliens, rockets, fuel running out
 
 ### Source Material
 ##### Inspirations
@@ -15,7 +15,7 @@ Arcade-inspired side-scrolling shoot-em-up in outer space
   * [Vanguard](https://www.youtube.com/watch?v=4MwVWsHBm5g) (1981)
 
 ##### Textures
-  * Open Game Art
+  * [Master484 on OpenGameArt.org](https://opengameart.org/users/master484)
   * [Spaceship Game Pixel Art](https://graphicriver.net/item/spaceship-game-pixel-art/3489035?WT.mc_id=GT-tuts-sprite-sheets&_ga=2.192405738.1760310262.1526062490-1990413307.1526062489)
 
 ##### Sounds
