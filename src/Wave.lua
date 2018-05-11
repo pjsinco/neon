@@ -12,28 +12,33 @@ function Wave:init(player, defs, terrain, rockets)
     self.duration = defs.duration
     self.speedMultiplier = defs.speedMultiplier
     self.powerupDuration = defs.powerupDuration
+    self.timers = {}
 
     -- where we can expect there to be no terrain
-    self.liveArea = VIRTUAL_HEIGHT - (self.terrain.maxHeight * TILE_SIZE)
+    self.liveArea = VIRTUAL_HEIGHT - 
+                    SCREEN_PADDING_TOP_WITH_SCORE - 
+                    (self.terrain.maxHeight * TILE_SIZE)
 
     for i = 1, self.alienCount do
         local alien = self:spawnAlien({
             x = (i % 2 == 0) and VIRTUAL_WIDTH - 18 or VIRTUAL_WIDTH - 54,
-            y = i * ((self.liveArea - 34)/ self.alienCount),
+            y = i * ((self.liveArea - 34) / self.alienCount),
             -- 34 is an estimate of the alien's vertical range, I think
         })
         table.insert(self.aliens, alien)
     end
 
-    Timer.after(self.duration, function() 
-        Event.dispatch('wave-completed')
-    end)
+    Timer.every(2, function() 
+        if not self:aliensAreOnScreen() then
+            Event.dispatch('wave-completed')
+        end
+    end):group(self.timers)
 
     Timer.every(defs.maybeSpawnRocketSeconds, function()
         self:maybeSpawnRocket(#self.terrain.gridYs - 1,
                               ENTITY_DEFS['rocket-1'],
                               defs.maybeSpawnRocketChance) 
-    end)
+    end):group(self.timers)
 
     Timer.every(defs.maybeSpawnPowerupSeconds, function()
         if self.powerup == nil then
@@ -41,13 +46,14 @@ function Wave:init(player, defs, terrain, rockets)
             self:maybeSpawnPowerup(defs.maybeSpawnPowerupChance,
                                    ENTITY_DEFS[powerupType])
         end
-    end)
+    end):group(self.timers)
 end
 
 function Wave:update(dt)
+    Timer.update(dt, self.timers)
+
     self:cleanupEntities(self.rockets)
 
-    Timer.update(dt)
     self.terrain:update(dt)
     self.player:update(dt)
 
@@ -133,7 +139,7 @@ function Wave:spawnAlien(params)
 end
 
 function Wave:maybeSpawnRocket(terrainIndex, rocketDef, chance)
-    if (math.random(2) == 1) then
+    if (math.random(chance) == 1) then
         local rocket = Rocket({
             x = TILE_SIZE * terrainIndex,
             y = self.terrain:tileToPoint(self.terrain.gridYs[terrainIndex]) - 10,
@@ -163,14 +169,14 @@ function Wave:maybeSpawnPowerup(chance, def)
         gSounds['powerup-appears']:play()
         Timer.tween(1, {
             [self.powerup] = { transitionAlpha = 255 }
-        }):finish(function() 
+        }):group(self.timers):finish(function() 
             Timer.after(self.powerupDuration, function() 
                 Timer.tween(1, {
                     [self.powerup] = { transitionAlpha = 0 }
-                }):finish(function()
+                }):group(self.timers):finish(function()
                     self.powerup.remove = true
                 end)
-            end)
+            end):group(self.timers)
         end)
     end
 end
@@ -194,4 +200,20 @@ function Wave:cleanupEntities(entityTable)
             table.remove(entityTable, i)
         end
     end
+end
+
+
+--[[
+   Whether any aliens are still on the screen
+]]
+function Wave:aliensAreOnScreen()
+    local aliensAreRemaining = false
+
+    for _, alien in pairs(self.aliens) do
+        if alien.x > 0 and not alien.hit then
+            aliensAreRemaining = true
+            break
+        end
+    end
+    return aliensAreRemaining
 end

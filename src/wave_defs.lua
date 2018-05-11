@@ -16,12 +16,12 @@ WAVE_DEFS = {
     },
     ['zigzag-2'] = {
         speedMultiplier = 1.25,
-        alienCount = 16,
+        alienCount = 12,
         duration = 10,
         rocketCount = 10,
         terrainMinHeight = 4,
         terrainMaxHeight = 8,
-        maybeSpawnRocketSeconds = 1,
+        maybeSpawnRocketSeconds = 0.5,
         maybeSpawnRocketChance = 2,
         --maybeSpawnPowerupSeconds = math.random(5, 10), -- every n seconds
         maybeSpawnPowerupSeconds = 2, -- every n seconds

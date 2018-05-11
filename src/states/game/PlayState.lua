@@ -2,10 +2,12 @@ PlayState = Class({ __includes = BaseState })
 
 function PlayState:init(params)
 
+    self.timers = {}
+
     Timer.after(0.5, function() 
         gSounds['theme']:setLooping(true)
         gSounds['theme']:play()
-    end)
+    end):group(self.timers)
 
     self.player = Ship({ 
         x = 16, 
@@ -28,6 +30,7 @@ function PlayState:init(params)
 
     self.score = nil 
     self.player.lives = nil
+    self.paused = false
 
     Event.on('wave-completed', function(waveIndex)
         print('heardwavecompleted')
@@ -45,7 +48,24 @@ function PlayState:init(params)
     end)
 
     Event.on('player-collided', function(player, other)
+        Chain(
+            function(go)
+                Timer.after(1.1, go):group(self.timers)
+            end,
+            function(go)
+                self.paused = true
+                self.gameMessage = GameMessage('Player 1', go)
+            end,
+            function(go)
+                self.paused = false
+                self.gameMessage = nil
+            end
+        )()
+
         self.player.lives = self.player.lives - 1
+        if self.player.lives == 0 then
+            gStateMachine:change('game-over')
+        end
     end)
 end
 
@@ -55,7 +75,14 @@ function PlayState:enter(params)
 end
 
 function PlayState:update(dt)
-    self.wave:update(dt)
+    Timer.update(dt, self.timers)
+    if not self.paused then
+        self.wave:update(dt)
+    end
+
+    if self.gameMessage then
+        self.gameMessage:update(dt)
+    end
 end
 
 function PlayState:render()
@@ -78,4 +105,8 @@ function PlayState:render()
 
 
     self.wave:render()
+    
+    if self.gameMessage then
+        self.gameMessage:render()
+    end
 end

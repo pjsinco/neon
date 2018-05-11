@@ -36,6 +36,7 @@ function Animation:update(dt)
 
             if self.currentFrame == 1 then
                 self.timesPlayed = self.timesPlayed + 1
+                Event.dispatch('animation-completed', self)
                 self.after()
             end
         end
