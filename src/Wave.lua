@@ -14,12 +14,14 @@ function Wave:init(player, defs, terrain, rockets)
     self.powerupDuration = defs.powerupDuration
 
     -- where we can expect there to be no terrain
-    self.liveArea = VIRTUAL_HEIGHT - (self.terrain.maxHeight * TILE_SIZE)
+    self.liveArea = VIRTUAL_HEIGHT - 
+                    SCREEN_PADDING_TOP_WITH_SCORE - 
+                    (self.terrain.maxHeight * TILE_SIZE)
 
     for i = 1, self.alienCount do
         local alien = self:spawnAlien({
             x = (i % 2 == 0) and VIRTUAL_WIDTH - 18 or VIRTUAL_WIDTH - 54,
-            y = i * ((self.liveArea - 34)/ self.alienCount),
+            y = i * ((self.liveArea - 34) / self.alienCount),
             -- 34 is an estimate of the alien's vertical range, I think
         })
         table.insert(self.aliens, alien)

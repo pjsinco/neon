@@ -17,7 +17,7 @@ function ShipMovingState:update(dt)
 
     if love.keyboard.isDown('up') then
         self.ship:changeAnimation('move-up')
-        self.ship.y = math.max(0, self.ship.y - self.ship.dy * dt)
+        self.ship.y = math.max(SCREEN_PADDING_TOP_WITH_SCORE, self.ship.y - self.ship.dy * dt)
     elseif love.keyboard.isDown('down') then
         self.ship:changeAnimation('move-down')
         self.ship.y = math.min(VIRTUAL_HEIGHT - self.ship.height, 

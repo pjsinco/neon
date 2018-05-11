@@ -28,6 +28,7 @@ function PlayState:init(params)
 
     self.score = nil 
     self.player.lives = nil
+    self.paused = false
 
     Event.on('wave-completed', function(waveIndex)
         print('heardwavecompleted')
@@ -45,7 +46,26 @@ function PlayState:init(params)
     end)
 
     Event.on('player-collided', function(player, other)
+        Chain(
+            function(go)
+                Timer.after(2, go)
+            end,
+            function(go)
+                self.paused = true
+                self.gameMessage = GameMessage('Player 1', go)
+            end,
+            function(go)
+                self.paused = false
+                self.gameMessage = nil
+            end
+        )()
+
         self.player.lives = self.player.lives - 1
+        if self.player.lives == 0 then
+            gStateMachine:change('game-over')
+            gSounds['theme']:stop()
+            gSounds['game-over']:play()
+        end
     end)
 end
 
@@ -55,7 +75,14 @@ function PlayState:enter(params)
 end
 
 function PlayState:update(dt)
-    self.wave:update(dt)
+    Timer.update(dt)
+    if not self.paused then
+        self.wave:update(dt)
+    end
+
+    if self.gameMessage then
+        self.gameMessage:update(dt)
+    end
 end
 
 function PlayState:render()
@@ -78,4 +105,8 @@ function PlayState:render()
 
 
     self.wave:render()
+    
+    if self.gameMessage then
+        self.gameMessage:render()
+    end
 end

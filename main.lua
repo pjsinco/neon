@@ -24,7 +24,7 @@ function love.load()
         ['title'] = function() return TitleScreenState({}) end,
         ['countdown'] = function() return CountdownState({}) end,
         ['play'] = function() return PlayState({}) end,
-        ['score'] = function() return ScoreState({}) end,
+        ['game-over'] = function() return GameOverState({}) end,
     })
     gStateMachine:change('title')
 
