@@ -8,11 +8,11 @@ function Ship:init(params)
     self.projectiles = {}
     self.inPlay = true
     self.invulnerable = false
-    self.startingFuel = 10
+    self.startingFuel = 20
     self.fuel = self.startingFuel
     self.timers = {}
 
-    Timer.every(5, function()
+    Timer.every(2, function()
         self.fuel = self.fuel - 1
         if self.fuel <= 0 then
             Event.dispatch('ran-out-of-fuel')

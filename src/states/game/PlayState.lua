@@ -89,9 +89,15 @@ function PlayState:update(dt)
 end
 
 function PlayState:render()
+    love.graphics.setFont(gFonts['image'])
+
     -- show score
+    love.graphics.setColor(gColors['white'])
+    love.graphics.print('1UP', SCREEN_PADDING_LEFT, SCREEN_PADDING_TOP)
+
+    love.graphics.setColor(gColors['yellow'])
     love.graphics.print(tostring(self.score),
-                        SCREEN_PADDING_LEFT,
+                        SCREEN_PADDING_LEFT + 30,
                         SCREEN_PADDING_TOP)
 
     -- show lives left
@@ -100,11 +106,26 @@ function PlayState:render()
                         SCREEN_PADDING_TOP)
 
     -- show wave number
-    love.graphics.printf('Wave ' .. tostring(self.waveCount),
-                         0,
-                         SCREEN_PADDING_TOP,
-                         VIRTUAL_WIDTH - SCREEN_PADDING_RIGHT - SCREEN_PADDING_LEFT,
-                         "center")
+--    love.graphics.printf('Wave ' .. tostring(self.waveCount),
+--                         0,
+--                         SCREEN_PADDING_TOP,
+--                         VIRTUAL_WIDTH - SCREEN_PADDING_RIGHT - SCREEN_PADDING_LEFT,
+--                         "center")
+
+    -- show fuel gauge
+    love.graphics.setColor(gColors['yellow'])
+
+    love.graphics.print('Fuel', 200, SCREEN_PADDING_TOP)
+
+    local fuelPadding = 3
+    for i = 1, self.player.startingFuel do
+        if self.player.fuel >= i then
+            love.graphics.setColor(gColors['red'])
+        else
+            love.graphics.setColor(gColors['white'])
+        end
+        love.graphics.rectangle('fill', 240 + ((i - 1) * fuelPadding), SCREEN_PADDING_TOP + 3, 2, 10)
+    end
 
 
     self.wave:render()
