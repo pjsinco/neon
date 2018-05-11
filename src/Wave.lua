@@ -64,12 +64,12 @@ function Wave:update(dt)
     end
 
     for _, rocket in pairs(self.rockets) do
-        if self.player.inPlay and rocket:collides(self.player) then
-            Event.dispatch('player-collided', self.player, rocket)
-            rocket.active = false
-        end
-
         if not rocket.hit then
+            if self.player.inPlay and rocket:collides(self.player) then
+                Event.dispatch('player-collided', self.player, rocket)
+                rocket.active = false
+            end
+
             for _, projectile in pairs(self.player.projectiles) do
                 if projectile:collides(rocket) then
                     Event.dispatch('rocket-collided', rocket)
@@ -86,10 +86,12 @@ function Wave:update(dt)
             Event.dispatch('player-collided', self.player, alien)
         end
     
-        for _, projectile in pairs(self.player.projectiles) do
-            if not alien.hit and projectile:collides(alien) then
-                Event.dispatch('alien-collided', alien, projectile)
-                projectile.active = false
+        if not alien.hit then
+            for _, projectile in pairs(self.player.projectiles) do
+                if projectile:collides(alien) then
+                    Event.dispatch('alien-collided', alien, projectile)
+                    projectile.active = false
+                end
             end
         end
 
