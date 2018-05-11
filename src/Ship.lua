@@ -8,6 +8,16 @@ function Ship:init(params)
     self.projectiles = {}
     self.inPlay = true
     self.invulnerable = false
+    self.startingFuel = 10
+    self.fuel = self.startingFuel
+    self.timers = {}
+
+    Timer.every(5, function()
+        self.fuel = self.fuel - 1
+        if self.fuel <= 0 then
+            Event.dispatch('ran-out-of-fuel')
+        end
+    end):group(self.timers)
 
     Event.on('player-collided', function(player, other)
         Chain( 
@@ -30,11 +40,17 @@ function Ship:init(params)
     end)
 
     Event.on('powerup-consumed', function(powerup)
-print('powerupconsumed')
+        if powerup.powerupType == 'fuel' then
+            self.fuel = math.max(self.fuel + 5, self.startingFuel)
+        elseif powerup.powerupType == 'invulnerable' then
+print('goinvulnerable')
+        end
     end)
 end
 
 function Ship:update(dt)
+    Timer.update(dt, self.timers)
+
     Entity.update(self, dt)
 
     if self.inPlay and love.keyboard.wasPressed('space') then

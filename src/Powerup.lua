@@ -5,10 +5,13 @@ function Powerup:init(params, x, y)
     self.x = x
     self.y = y
     self.transitionAlpha = 0
+    self.powerupType = params.powerupType
 
     Event.on('powerup-consumed', function(powerup)
         if powerup == self then
+            gSounds['powerup']:play()
             self.hit = true
+            self.remove = true
         end
     end)
 end
