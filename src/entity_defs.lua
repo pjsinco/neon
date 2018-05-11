@@ -80,6 +80,7 @@ ENTITY_DEFS = {
         speed = -120,
         width = 9,
         height = 17,
+        value = 50,
         category = 'projectile',
         animations = {
             ['idle'] = {
@@ -92,6 +93,12 @@ ENTITY_DEFS = {
                 frames = { 2, 3 },
                 interval = 0.15,
                 texture = 'rocket',
+                looping = true,
+            },
+            ['exploding'] = {
+                frames = { 16, 15, 14, 13, 12, 11, 10, 9, 10, 11, 12, 13, 14, 15, 16 },
+                interval = 0.15,
+                texture = 'explosion',
                 looping = true,
             },
         }
