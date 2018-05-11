@@ -88,11 +88,19 @@ gSounds = {
     ['laser-1'] = love.audio.newSource('sounds/Laser_Shoot12.wav', 'static'),
     ['powerup'] = love.audio.newSource('sounds/Powerup38.wav', 'static'),
     ['theme'] = love.audio.newSource('sounds/maintheme.mp3', 'static'),
-    ['theme-alt'] = love.audio.newSource('sounds/maintheme-alt-1.mp3', 'static'),
+    ['theme-alt'] = 
+        love.audio.newSource('sounds/maintheme-alt-1.mp3', 'static'),
+    ['theme-srd'] = 
+        love.audio.newSource('sounds/maintheme-alt-1.mp3', 'static'),
     ['coin'] = love.audio.newSource('sounds/coin.mp3', 'static'),
     ['game-over'] = love.audio.newSource('sounds/gameover.mp3', 'static'),
-    ['invulnerable'] = love.audio.newSource('sounds/invulnerable.mp3', 'static'),
-    ['powerup-appears'] = love.audio.newSource('sounds/powerup-appears.wav', 'static'),
+    ['invulnerable'] = 
+        love.audio.newSource('sounds/invulnerable.mp3', 'static'),
+    ['powerup-appears'] = 
+        love.audio.newSource('sounds/powerup-appears.wav', 'static'),
+    ['sfx-8'] = love.audio.newSource('sounds/sfx8.mp3', 'static'),
+    ['sfx-11'] = love.audio.newSource('sounds/sfx11.mp3', 'static'),
+    ['sfx-17'] = love.audio.newSource('sounds/sfx17.mp3', 'static'),
 }
 
 gColors = {
