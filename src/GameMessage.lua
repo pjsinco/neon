@@ -6,16 +6,18 @@ GameMessage = Class({})
 function GameMessage:init(message, callback)
     self.message = message
     self.mask = false
+
+    self.timers = {}
     
-    self.timer = Timer.every(0.5, function()
+    Timer.every(0.5, function()
         self.mask = not self.mask
-    end):limit(8):finish(function() 
+    end):group(self.timers):limit(6):finish(function() 
         callback()
     end)
 end
 
 function GameMessage:update(dt)
-    self.timer:update(dt)
+    Timer.update(dt, self.timers)
 end
 
 function GameMessage:render()

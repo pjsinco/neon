@@ -2,10 +2,12 @@ PlayState = Class({ __includes = BaseState })
 
 function PlayState:init(params)
 
+    self.timers = {}
+
     Timer.after(0.5, function() 
         gSounds['theme']:setLooping(true)
         gSounds['theme']:play()
-    end)
+    end):group(self.timers)
 
     self.player = Ship({ 
         x = 16, 
@@ -48,7 +50,7 @@ function PlayState:init(params)
     Event.on('player-collided', function(player, other)
         Chain(
             function(go)
-                Timer.after(2, go)
+                Timer.after(1.1, go):group(self.timers)
             end,
             function(go)
                 self.paused = true
@@ -63,8 +65,6 @@ function PlayState:init(params)
         self.player.lives = self.player.lives - 1
         if self.player.lives == 0 then
             gStateMachine:change('game-over')
-            gSounds['theme']:stop()
-            gSounds['game-over']:play()
         end
     end)
 end
@@ -75,7 +75,7 @@ function PlayState:enter(params)
 end
 
 function PlayState:update(dt)
-    Timer.update(dt)
+    Timer.update(dt, self.timers)
     if not self.paused then
         self.wave:update(dt)
     end
