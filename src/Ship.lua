@@ -12,7 +12,7 @@ function Ship:init(params)
     self.fuel = self.startingFuel
     self.timers = {}
 
-    Timer.every(2, function()
+    Timer.every(5, function()
         self.fuel = self.fuel - 1
         if self.fuel <= 0 then
             Event.dispatch('ran-out-of-fuel')

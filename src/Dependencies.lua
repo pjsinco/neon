@@ -45,9 +45,9 @@ gTextures = {
     ['space'] = love.graphics.newImage('graphics/space-indexed.png'),
     ['afterburners'] = love.graphics.newImage('graphics/afterburners-1.png'),
     ['alien-ship-1'] = love.graphics.newImage('graphics/alien-ship-1.png'),
-    ['alien-ship-gray'] = love.graphics.newImage('graphics/ship-small-gray-3.png'),
-    ['alien-ship-green'] = 
-        love.graphics.newImage('graphics/alien-ships-green-1.png'),
+    ['alien-ship-pink'] = love.graphics.newImage('graphics/ship-small-pink.png'),
+    --['alien-ship-green'] = 
+        --love.graphics.newImage('graphics/alien-ships-green-1.png'),
     ['projectile-1'] = love.graphics.newImage('graphics/projectiles-indexed.png'),
     ['explosion'] = love.graphics.newImage('graphics/explosions-indexed.png'),
     ['rocket'] = love.graphics.newImage('graphics/rockets-indexed.png'),
@@ -60,10 +60,10 @@ gFrames = {
     ['ship'] = GenerateQuads(gTextures['ship'], 21, 34),
     ['afterburners'] = GenerateQuads(gTextures['afterburners'], 10, 7),
     ['alien-ship-1'] = GenerateQuads(gTextures['alien-ship-1'], 26, 22),
-    ['alien-ship-green'] = 
-        GenerateQuads(gTextures['alien-ship-green'], 37, 40),
-    ['alien-ship-gray'] = 
-        GenerateQuads(gTextures['alien-ship-gray'], 18, 20),
+    --['alien-ship-green'] = 
+        --GenerateQuads(gTextures['alien-ship-green'], 37, 40),
+    ['alien-ship-pink'] = 
+        GenerateQuads(gTextures['alien-ship-pink'], 18, 20),
     ['projectile-1'] = GenerateQuads(gTextures['projectile-1'], 12, 1),
     ['explosion'] = GenerateQuads(gTextures['explosion'], 16, 16),
     ['rocket'] = GenerateQuads(gTextures['rocket'], 9, 17),

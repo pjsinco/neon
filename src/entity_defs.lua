@@ -42,13 +42,13 @@ ENTITY_DEFS = {
             ['static'] = {
                 frames = { 3, 2, 1, 2 },
                 interval = 0.15,
-                texture = 'alien-ship-gray',
+                texture = 'alien-ship-pink',
                 looping = true,
             },
             ['move'] = {
                 frames = { 3, 2, 1, 2 },
                 interval = 0.15,
-                texture = 'alien-ship-gray',
+                texture = 'alien-ship-pink',
                 looping = true,
             },
             ['exploding'] = {
