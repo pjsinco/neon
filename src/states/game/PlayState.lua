@@ -30,13 +30,6 @@ function PlayState:init(params)
     self.player.lives = nil
 
     Event.on('wave-completed', function(waveIndex)
-        -- flag powerups, rockets for removal
-        --for _, powerup in pairs(self.wave.powerups) do
-            --powerup.remove = true
-        --end
-        --for _, rocket in pairs(self.wave.rockets) do
-            --rocket.remove = true
-        --end
         print('heardwavecompleted')
         print(self.wave:getAlienCount())
         self.wave:cleanupEntities(self.wave.aliens)
