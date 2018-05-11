@@ -9,10 +9,13 @@ function TitleScreenState:update(dt)
 
     if love.keyboard.wasPressed('enter') or
        love.keyboard.wasPressed('return') then
-        gSounds['coin']:play()
         gStateMachine:change('play', { score = 0 })
     end
         
+end
+
+function TitleScreenState:exit()
+    gSounds['coin']:play()
 end
 
 function TitleScreenState:render()

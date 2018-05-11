@@ -5,7 +5,6 @@ function GameOverState:init()
 end
 
 function GameOverState:enter(params)
-    gSounds['theme']:stop()
     gSounds['game-over']:play()
 end
 

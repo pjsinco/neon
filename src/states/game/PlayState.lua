@@ -1,7 +1,6 @@
 PlayState = Class({ __includes = BaseState })
 
 function PlayState:init(params)
-
     self.timers = {}
 
     Timer.after(0.5, function() 
@@ -72,6 +71,10 @@ end
 function PlayState:enter(params)
     self.score = params.score or 0
     self.player.lives = params.lives or STARTING_LIVES
+end
+
+function PlayState:exit()
+    gSounds['theme']:stop()
 end
 
 function PlayState:update(dt)
