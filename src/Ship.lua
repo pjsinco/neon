@@ -12,14 +12,14 @@ function Ship:init(params)
     self.fuel = self.startingFuel
     self.timers = {}
 
-    Timer.every(1, function()
+    Timer.every(4, function()
         self.fuel = self.fuel - 1
         if self.fuel <= 2 then
             Event.dispatch('fuel-is-low')
         end
 
         if self.fuel <= 0 then
-            Event.dispatch('ran-out-of-fuel')
+            Event.dispatch('player-expired')
         end
     end):group(self.timers)
 

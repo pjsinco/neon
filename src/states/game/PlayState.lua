@@ -36,10 +36,14 @@ function PlayState:init(params)
     Event.on('fuel-is-low', function()
         self.glitching = true  
         gSounds['theme']:pause()
-        gSounds['sfx-17']:setLooping(true)
-        gSounds['sfx-17']:play()
+        gSounds['glitch']:setLooping(true)
+        gSounds['glitch']:play()
         self.gameMessage = 
             GameMessage('Fuel is low', 'warning', function() end)
+    end)
+
+    Event.on('player-expired', function()
+        gStateMachine:change('game-over')
     end)
 
     Event.on('fuel-restored', function() 
@@ -83,7 +87,7 @@ function PlayState:init(params)
 
         self.player.lives = self.player.lives - 1
         if self.player.lives == 0 then
-            gStateMachine:change('game-over')
+            Event.dispatch('player-expired')
         end
     end)
 end
@@ -94,7 +98,7 @@ function PlayState:enter(params)
 end
 
 function PlayState:exit()
-    gSounds['theme']:stop()
+    love.audio.stop()
 end
 
 function PlayState:update(dt)
@@ -144,7 +148,7 @@ function PlayState:render()
 
     love.graphics.print('Fuel', 200, SCREEN_PADDING_TOP)
 
-    local fuelPadding = 3
+    local fuelPadding = 4
     for i = 1, self.player.startingFuel do
         if self.player.fuel >= i then
             love.graphics.setColor(gColors['red'])

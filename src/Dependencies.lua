@@ -100,7 +100,7 @@ gSounds = {
         love.audio.newSource('sounds/powerup-appears.wav', 'static'),
     ['sfx-8'] = love.audio.newSource('sounds/sfx8.mp3', 'static'),
     ['sfx-11'] = love.audio.newSource('sounds/sfx11.mp3', 'static'),
-    ['sfx-17'] = love.audio.newSource('sounds/sfx17.mp3', 'static'),
+    ['glitch'] = love.audio.newSource('sounds/sfx17.mp3', 'static'),
 }
 
 gColors = {
