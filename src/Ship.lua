@@ -13,6 +13,7 @@ function Ship:init(params)
     self.timers = {}
 
     Timer.every(4, function()
+print(self.fuel)
         self.fuel = self.fuel - 1
         if self.fuel <= 2 then
             Event.dispatch('fuel-is-low')
@@ -46,7 +47,7 @@ function Ship:init(params)
     Event.on('powerup-consumed', function(powerup)
         if powerup.powerupType == 'fuel' then
             Event.dispatch('fuel-restored')
-            self.fuel = math.max(self.fuel + 5, self.startingFuel)
+            self.fuel = math.min(self.fuel + 10, self.startingFuel)
         elseif powerup.powerupType == 'invulnerable' then
 print('goinvulnerable')
         end

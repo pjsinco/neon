@@ -69,6 +69,15 @@ function Wave:update(dt)
             rocket.active = false
         end
 
+        if not rocket.hit then
+            for _, projectile in pairs(self.player.projectiles) do
+                if projectile:collides(rocket) then
+                    Event.dispatch('rocket-collided', rocket)
+                    projectile.active = false
+                end
+            end
+        end
+
         rocket:update(dt)
     end
 
@@ -151,7 +160,8 @@ function Wave:maybeSpawnRocket(terrainIndex, rocketDef, chance)
             speed      = rocketDef.speed,
             texture    = rocketDef.texture,
             animations = rocketDef.animations,
-            category = rocketDef.category,
+            value      = rocketDef.value,
+            category   = rocketDef.category,
         })
         rocket.stateMachine = StateMachine({
             ['idle'] = function() return RocketIdleState(rocket) end,
