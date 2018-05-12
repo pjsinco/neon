@@ -13,7 +13,6 @@ function Ship:init(params)
     self.timers = {}
 
     Timer.every(4, function()
-print(self.fuel)
         self.fuel = self.fuel - 1
         if self.fuel <= 2 then
             Event.dispatch('fuel-is-low')
@@ -24,32 +23,13 @@ print(self.fuel)
         end
     end):group(self.timers)
 
-    Event.on('player-collided', function(player, other)
-        Chain( 
-            function(go)
-                player:changeState('idle') 
-                player.inPlay = false
-                gSounds['explosion-1']:stop()
-                gSounds['explosion-1']:play()
-                go()
-            end,
-            player:generateExplode(), 
-            function(go)
-                player.x = 16
-                player.y = VIRTUAL_HEIGHT / 2 - (player.height / 2)
-                player:changeState('moving')
-                player.inPlay = true
-                go()
-            end
-        )()
-    end)
 
     Event.on('powerup-consumed', function(powerup)
         if powerup.powerupType == 'fuel' then
             Event.dispatch('fuel-restored')
             self.fuel = math.min(self.fuel + 10, self.startingFuel)
         elseif powerup.powerupType == 'invulnerable' then
-print('goinvulnerable')
+            print('goinvulnerable')
         end
     end)
 end

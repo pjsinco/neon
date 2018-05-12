@@ -42,6 +42,7 @@ function PlayState:init(params)
     end)
 
     Event.on('player-expired', function()
+        self.paused = true
         gStateMachine:change('game-over', { score = self.score })
     end)
 

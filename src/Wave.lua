@@ -50,6 +50,27 @@ function Wave:init(player, defs, terrain, rockets)
                                    ENTITY_DEFS[powerupType])
         end
     end):group(self.timers)
+
+    Event.on('player-collided', function(player, other)
+        Chain( 
+            function(go)
+                player:changeState('idle') 
+                player.inPlay = false
+                gSounds['explosion-1']:stop()
+                gSounds['explosion-1']:play()
+                go()
+            end,
+            player:generateExplode(), 
+            function(go)
+                player.x = 16
+                player.y = math.random(SCREEN_PADDING_TOP_WITH_SCORE,
+                                       self.liveArea - player.height)
+                player:changeState('moving')
+                player.inPlay = true
+                go()
+            end
+        )()
+    end)
 end
 
 function Wave:update(dt)
@@ -179,7 +200,8 @@ end
 
 function Wave:maybeSpawnPowerup(chance, def)
     if (math.random(chance) == 1) then
-        local y = math.random(1, self.liveArea - def.height)
+        local y = math.random(SCREEN_PADDING_TOP_WITH_SCORE,
+                              self.liveArea - def.height)
         local x = math.random(1, VIRTUAL_WIDTH - def.width)
         self.powerup = Powerup(def, x, y)
         self.powerup:changeAnimation('base')
