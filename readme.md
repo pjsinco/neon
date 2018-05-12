@@ -3,7 +3,7 @@ Side-scrolling shoot-em-up in outer space, inspired by the golden era of arcades
 
 ### Gameplay Notes
 * Arrow keys, spacebar
-* Threats from aliens, rockets, fuel running out
+* Threats from aliens, rockets, terrain, empty fuel tank
 * Fuel powerups
 * Glitch effect when fuel is low
 
