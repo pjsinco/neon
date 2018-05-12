@@ -3,11 +3,8 @@ Arcade-inspired side-scrolling shoot-em-up in outer space
 
 ### Gameplay Notes
 * Arrow keys, spacebar
-* Three waves
-* Two powerups
-    * Fuel
-    * Invulnerability  
 * Threats from aliens, rockets, fuel running out
+* Fuel powerups
 * Glitch effect when fuel is low
 * Bonus for clearing all aliens in a wave
 
