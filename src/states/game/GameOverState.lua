@@ -8,6 +8,9 @@ function GameOverState:init()
         gSounds['theme-alt']:setLooping(true)
         gSounds['theme-alt']:play()
     end):group(self.timers)
+
+    Timer.after(10, function()
+    end):group(self.timers)
 end
 
 function GameOverState:enter(params)
@@ -31,11 +34,15 @@ end
 
 function GameOverState:render()
     love.graphics.setFont(gFonts['large'])
-    love.graphics.printf('The End', 0, 64, VIRTUAL_WIDTH, 'center')
+    love.graphics.printf('Neon', 0, 64, VIRTUAL_WIDTH, 'center')
+
+    love.graphics.setFont(gFonts['image'])
+    love.graphics.setColor(gColors['yellow'])
+    love.graphics.printf('The End', 0, 104, VIRTUAL_WIDTH, 'center')
 
     love.graphics.setFont(gFonts['image'])
     love.graphics.setColor(gColors['red'])
-    love.graphics.printf('Press Enter to play again', 0, 100, VIRTUAL_WIDTH, 'center')
+    love.graphics.printf('Press Enter to play again', 0, 132, VIRTUAL_WIDTH, 'center')
 
     love.graphics.setColor(gColors['yellow'])
     love.graphics.print(tostring(self.score),

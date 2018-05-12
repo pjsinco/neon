@@ -43,7 +43,9 @@ function PlayState:init(params)
 
     Event.on('player-expired', function()
         self.paused = true
-        gStateMachine:change('game-over', { score = self.score })
+        Timer.after(2, function()
+            gStateMachine:change('game-over', { score = self.score })
+        end):group(self.timers)
     end)
 
     Event.on('fuel-restored', function() 
@@ -70,6 +72,12 @@ function PlayState:init(params)
     end)
 
     Event.on('player-collided', function(player, other)
+        self.player.lives = self.player.lives - 1
+        if self.player.lives == 0 then
+            Event.dispatch('player-expired')
+            return
+        end
+
         Chain(
             function(go)
                 Timer.after(1.1, go):group(self.timers)
@@ -83,15 +91,11 @@ function PlayState:init(params)
                 self.gameMessage = nil
             end
         )()
-
-        self.player.lives = self.player.lives - 1
-        if self.player.lives == 0 then
-            Event.dispatch('player-expired')
-        end
     end)
 end
 
 function PlayState:enter(params)
+    gSounds['coin']:play()
     self.score = params.score or 0
     self.player.lives = params.lives or STARTING_LIVES
 end
@@ -131,16 +135,14 @@ function PlayState:render()
                         SCREEN_PADDING_TOP)
 
     -- show lives left
+    love.graphics.setColor(gColors['white'])
+    love.graphics.print('Lives ',
+                        VIRTUAL_WIDTH - SCREEN_PADDING_RIGHT - IMAGE_FONT_WIDTH - 48,
+                        SCREEN_PADDING_TOP)
+    love.graphics.setColor(gColors['yellow'])
     love.graphics.print(tostring(self.player.lives),
                         VIRTUAL_WIDTH - SCREEN_PADDING_RIGHT - IMAGE_FONT_WIDTH,
                         SCREEN_PADDING_TOP)
-
-    -- show wave number
---    love.graphics.printf('Wave ' .. tostring(self.waveCount),
---                         0,
---                         SCREEN_PADDING_TOP,
---                         VIRTUAL_WIDTH - SCREEN_PADDING_RIGHT - SCREEN_PADDING_LEFT,
---                         "center")
 
     -- show fuel gauge
     love.graphics.setColor(gColors['yellow'])
