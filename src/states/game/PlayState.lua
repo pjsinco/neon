@@ -23,11 +23,10 @@ function PlayState:init(params)
     self.player:changeState('moving')
 
     self.waveCount = 1
-    --self.level = 1
 
     self.terrain = Terrain()
 
-    self.wave = Wave(self.player, WAVE_DEFS['zigzag'], self.terrain)
+    self.wave = Wave(self.player, WAVE_DEFS[self.waveCount], self.terrain)
 
     self.score = nil 
     self.player.lives = nil
@@ -43,25 +42,24 @@ function PlayState:init(params)
     end)
 
     Event.on('player-expired', function()
-        gStateMachine:change('game-over')
+        gStateMachine:change('game-over', { score = self.score })
     end)
 
     Event.on('fuel-restored', function() 
         if self.glitching then
             self.glitching = false
-            gSounds['sfx-17']:stop()
+            gSounds['glitch']:stop()
             gSounds['theme']:resume()
             self.gameMessage = nil
         end
     end)
 
     Event.on('wave-completed', function(waveIndex)
-        print('heardwavecompleted')
         print(self.wave:getAlienCount())
         self.wave:cleanupEntities(self.wave.aliens)
-        self.waveCount = self.waveCount + 1
+        self.waveCount = math.min(self.waveCount + 1, #WAVE_DEFS) -- for now
         self.wave = Wave(self.player,
-                         WAVE_DEFS['zigzag-2'],
+                         WAVE_DEFS[self.waveCount],
                          self.terrain,
                          self.wave.rockets)
     end)

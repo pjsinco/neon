@@ -9,7 +9,6 @@ function Wave:init(player, defs, terrain, rockets)
     self.powerup = nil 
     self.rockets = rockets or {}
     self.alienCount = defs.alienCount
-    self.duration = defs.duration
     self.speedMultiplier = defs.speedMultiplier
     self.powerupDuration = defs.powerupDuration
     self.timers = {}
@@ -21,12 +20,15 @@ function Wave:init(player, defs, terrain, rockets)
                     (self.terrain.maxHeight * TILE_SIZE)
 
     for i = 1, self.alienCount do
-        local alien = self:spawnAlien({
-            x = (i % 2 == 0) and VIRTUAL_WIDTH - 18 or VIRTUAL_WIDTH - 54,
-            y = i * ((self.liveArea - 34) / self.alienCount),
-            -- 34 is an estimate of the alien's vertical range, I think
-        })
-        table.insert(self.aliens, alien)
+        Timer.after(math.random(4), function() 
+            local alien = self:spawnAlien({
+                x = (i % 2 == 0) and VIRTUAL_WIDTH + 18 or VIRTUAL_WIDTH + 54,
+                y = i * ((self.liveArea - 34) / self.alienCount) + 
+                    SCREEN_PADDING_TOP_WITH_SCORE,
+                -- 34 is an estimate of the alien's vertical range, I think
+            }, defs.alienType, defs.alienState)
+            table.insert(self.aliens, alien)
+        end):group(self.timers)
     end
 
     Timer.every(2, function() 
@@ -133,21 +135,22 @@ function Wave:render()
     end
 end
 
-function Wave:spawnAlien(params)
+function Wave:spawnAlien(params, alienType, startState)
+    local def = ENTITY_DEFS[alienType]
     local alien = AlienShip({ 
         x = params.x, 
         y = params.y,
-        animations = ENTITY_DEFS['alien-1'].animations,
-        speed = ENTITY_DEFS['alien-1'].speed * self.speedMultiplier,
-        value = ENTITY_DEFS['alien-1'].value,
-        category = ENTITY_DEFS['alien-1'].category,
+        animations = def.animations,
+        speed = def.speed * self.speedMultiplier,
+        value = def.value,
+        category = def.category,
     })
 
     alien.stateMachine = StateMachine({
         ['static'] = function() return AlienStaticState(alien) end,
         ['moving'] = function() return AlienMovingState(alien) end,
     })
-    alien:changeState('moving')
+    alien:changeState(startState)
     
     return alien
 end
@@ -232,3 +235,4 @@ function Wave:aliensAreOnScreen()
     end
     return aliensAreRemaining
 end
+
