@@ -20,7 +20,7 @@ function Wave:init(player, defs, terrain, rockets)
                     (self.terrain.maxHeight * TILE_SIZE)
 
     for i = 1, self.alienCount do
-        Timer.after(math.random(4), function() 
+        Timer.after(math.random(5) / 2, function() 
             local alien = self:spawnAlien({
                 x = (i % 2 == 0) and VIRTUAL_WIDTH + 18 or VIRTUAL_WIDTH + 54,
                 y = i * ((self.liveArea - 34) / self.alienCount) + 
@@ -65,6 +65,7 @@ function Wave:init(player, defs, terrain, rockets)
                 player.x = 16
                 player.y = math.random(SCREEN_PADDING_TOP_WITH_SCORE,
                                        self.liveArea - player.height)
+                           
                 player:changeState('moving')
                 player.inPlay = true
                 go()
@@ -135,9 +136,7 @@ function Wave:update(dt)
             end
         end
     end
-
 end
-
 
 function Wave:render()
     self.terrain:render()
@@ -242,7 +241,6 @@ function Wave:cleanupEntities(entityTable)
     end
 end
 
-
 --[[
    Whether any aliens are still on the screen
 ]]
@@ -257,4 +255,3 @@ function Wave:aliensAreOnScreen()
     end
     return aliensAreRemaining
 end
-

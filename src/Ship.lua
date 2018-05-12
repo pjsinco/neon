@@ -12,7 +12,7 @@ function Ship:init(params)
     self.fuel = self.startingFuel
     self.timers = {}
 
-    Timer.every(4, function()
+    Timer.every(2, function()
         self.fuel = self.fuel - 1
         if self.fuel <= 2 then
             Event.dispatch('fuel-is-low')

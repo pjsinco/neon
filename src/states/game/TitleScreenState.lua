@@ -14,10 +14,6 @@ function TitleScreenState:update(dt)
         
 end
 
-function TitleScreenState:exit()
-    gSounds['coin']:play()
-end
-
 function TitleScreenState:render()
     love.graphics.setFont(gFonts['large'])
     love.graphics.printf('Neon', 0, 64, VIRTUAL_WIDTH, 'center')

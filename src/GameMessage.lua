@@ -4,7 +4,7 @@ GameMessage = Class({})
    Flash a message to the player
 ]]
 function GameMessage:init(message, level, callback)
-    self.levels = { 'info', 'warning' }
+    self.levels = { 'success', 'info', 'warning' }
     self.message = message
     self.masking = false
     self.level = level or 'info'
@@ -28,11 +28,12 @@ function GameMessage:render()
 
     if self.level == 'warning' then
         love.graphics.setColor(gColors['red'])
+    elseif self.level == 'success' then
+        love.graphics.setColor(gColors['green'])
     else
         love.graphics.setColor(gColors['white'])
     end
      
-
     if self.masking then
         love.graphics.setColorMask(false, false, false, false)
     end
