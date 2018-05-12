@@ -1,5 +1,5 @@
 # Neon
-Arcade-inspired side-scrolling shoot-em-up in outer space
+Arcade-golden-era-inspired side-scrolling shoot-em-up in outer space
 
 ### Gameplay Notes
 * Arrow keys, spacebar
