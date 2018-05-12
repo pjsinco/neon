@@ -42,6 +42,36 @@ ENTITY_DEFS = {
             ['static'] = {
                 frames = { 3, 2, 1, 2 },
                 interval = 0.15,
+                texture = 'alien-ship-blue',
+                looping = true,
+            },
+            ['move'] = {
+                frames = { 3, 2, 1, 2 },
+                interval = 0.15,
+                texture = 'alien-ship-blue',
+                looping = true,
+            },
+            ['exploding'] = {
+                --frames = { 8, 7, 6, 5, 4, 3, 2, 1, 2, 3, 4, 5, 6, 7, 8 },
+               --frames = { 16, 15, 14, 13, 12, 11, 10, 9,  10, 11, 12, 13, 14, 15, 16 },
+               --frames = { 24, 23, 22, 21, 20, 19, 18, 17, 18, 19, 20, 21, 22, 23, 24 },
+                frames = { 32, 23, 14, 5,  12, 27, 2,  25, 10, 19, 4,  21, 30, 7, 24 },
+                interval = 0.07,
+                looping = false,
+                texture = 'explosion',
+            }
+        }
+    },
+    ['alien-2'] = {
+        speed = SCROLL_SPEED * 1.15,
+        width = 26,
+        height = 22,
+        category = 'alien',
+        value = 125,
+        animations = {
+            ['static'] = {
+                frames = { 3, 2, 1, 2 },
+                interval = 0.15,
                 texture = 'alien-ship-pink',
                 looping = true,
             },
@@ -52,9 +82,60 @@ ENTITY_DEFS = {
                 looping = true,
             },
             ['exploding'] = {
-                --frames = { 8, 7, 6, 5, 4, 3, 2, 1, 2, 3, 4, 5, 6, 7, 8 },
-               --frames = { 16, 15, 14, 13, 12, 11, 10, 9,  10, 11, 12, 13, 14, 15, 16 },
-               --frames = { 24, 23, 22, 21, 20, 19, 18, 17, 18, 19, 20, 21, 22, 23, 24 },
+                frames = { 32, 23, 14, 5,  12, 27, 2,  25, 10, 19, 4,  21, 30, 7, 24 },
+                interval = 0.07,
+                looping = false,
+                texture = 'explosion',
+            }
+        }
+    },
+    ['alien-3'] = {
+        speed = SCROLL_SPEED * 1.25,
+        width = 26,
+        height = 22,
+        category = 'alien',
+        value = 125,
+        animations = {
+            ['static'] = {
+                frames = { 3, 2, 1, 2 },
+                interval = 0.15,
+                texture = 'alien-ship-yellow',
+                looping = true,
+            },
+            ['move'] = {
+                frames = { 3, 2, 1, 2 },
+                interval = 0.15,
+                texture = 'alien-ship-yellow',
+                looping = true,
+            },
+            ['exploding'] = {
+                frames = { 32, 23, 14, 5,  12, 27, 2,  25, 10, 19, 4,  21, 30, 7, 24 },
+                interval = 0.07,
+                looping = false,
+                texture = 'explosion',
+            }
+        }
+    },
+    ['alien-4'] = {
+        speed = SCROLL_SPEED * 1.25,
+        width = 26,
+        height = 22,
+        category = 'alien',
+        value = 125,
+        animations = {
+            ['static'] = {
+                frames = { 3, 2, 1, 2 },
+                interval = 0.15,
+                texture = 'alien-ship-green',
+                looping = true,
+            },
+            ['move'] = {
+                frames = { 3, 2, 1, 2 },
+                interval = 0.15,
+                texture = 'alien-ship-green',
+                looping = true,
+            },
+            ['exploding'] = {
                 frames = { 32, 23, 14, 5,  12, 27, 2,  25, 10, 19, 4,  21, 30, 7, 24 },
                 interval = 0.07,
                 looping = false,

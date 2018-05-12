@@ -34,7 +34,6 @@ function AlienShip:init(params)
     end)
 end
 
-
 function AlienShip:update(dt)
     Entity.update(self, dt)
 end
